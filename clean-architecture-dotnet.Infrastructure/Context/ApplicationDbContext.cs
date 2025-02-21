@@ -15,7 +15,7 @@ namespace clean_architecture_dotnet.Infrastructure.Context
             : base(options)
         {
         }
-
+         
         #region Users Tables
 
         public DbSet<UserAddress> UserAddresses { get; set; }
