@@ -23,13 +23,13 @@ namespace clean_architecture_dotnet.Infrastructure.EntitiesConfiguration.Users
             builder
                 .HasMany(u => u.Contact)
                 .WithOne(c => c.User)
-                .HasForeignKey(c => c.UserId)
+                .HasForeignKey(c => c.Id)
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder
                 .HasMany(u => u.Address)
                 .WithOne(a => a.User)
-                .HasForeignKey(a => a.UserId)
+                .HasForeignKey(a => a.Id)
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasData(

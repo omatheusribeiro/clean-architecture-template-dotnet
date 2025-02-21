@@ -20,7 +20,7 @@ namespace clean_architecture_dotnet.Infrastructure.EntitiesConfiguration.Users
 
             builder
             .HasOne(uc => uc.User)
-            .WithMany(u => u.Contacts)
+            .WithMany(u => u.Contact)
             .HasForeignKey(uc => uc.Id);
 
             builder.HasData(
