@@ -21,15 +21,15 @@ namespace clean_architecture_dotnet.Infrastructure.EntitiesConfiguration.Users
             builder.Property(p => p.Document).IsRequired();
 
             builder
-                .HasMany(u => u.Contact)
-                .WithOne(c => c.User)
-                .HasForeignKey(c => c.Id)
-                .OnDelete(DeleteBehavior.Cascade);
+               .HasMany(u => u.Contact)
+               .WithOne(c => c.User)
+               .HasForeignKey(c => c.UserId)
+               .OnDelete(DeleteBehavior.Cascade);
 
             builder
                 .HasMany(u => u.Address)
                 .WithOne(a => a.User)
-                .HasForeignKey(a => a.Id)
+                .HasForeignKey(a => a.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasData(

@@ -18,10 +18,12 @@ namespace clean_architecture_dotnet.Infrastructure.EntitiesConfiguration.Users
 
             builder.Property(p => p.PhoneNumber).IsRequired();
 
+            builder.Property(p => p.UserId).IsRequired();
+
             builder
-            .HasOne(uc => uc.User)
-            .WithMany(u => u.Contact)
-            .HasForeignKey(uc => uc.Id);
+                .HasOne(uc => uc.User)
+                .WithMany(u => u.Contact)
+                .HasForeignKey(uc => uc.UserId);
 
             builder.HasData(
                 new UserContact
@@ -31,6 +33,7 @@ namespace clean_architecture_dotnet.Infrastructure.EntitiesConfiguration.Users
                     ChangeDate = null,
                     Email = "usertest@test.com.br",
                     PhoneNumber = "+00 (00) 00000-0000",
+                    UserId = 1,
                 }); ;
         }
     }
