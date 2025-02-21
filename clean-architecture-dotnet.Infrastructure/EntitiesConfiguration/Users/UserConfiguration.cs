@@ -32,6 +32,12 @@ namespace clean_architecture_dotnet.Infrastructure.EntitiesConfiguration.Users
                 .HasForeignKey(a => a.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            builder
+                .HasMany(u => u.Sale)
+                .WithOne(a => a.User)
+                .HasForeignKey(a => a.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
             builder.HasData(
                 new User
                 {

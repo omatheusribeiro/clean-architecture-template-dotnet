@@ -1,10 +1,11 @@
 ﻿using clean_architecture_dotnet.Domain.Entities.Products;
 using clean_architecture_dotnet.Domain.Entities.Sales;
 using clean_architecture_dotnet.Domain.Entities.Users;
-using clean_architecture_dotnet.Infrastructure.EntitiesConfiguration.Products;
-using clean_architecture_dotnet.Infrastructure.EntitiesConfiguration.Users;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using clean_architecture_dotnet.Infrastructure.EntitiesConfiguration.Products;
+using clean_architecture_dotnet.Infrastructure.EntitiesConfiguration.Sales;
+using clean_architecture_dotnet.Infrastructure.EntitiesConfiguration.Users;
 
 namespace clean_architecture_dotnet.Infrastructure.Context
 {
@@ -55,6 +56,12 @@ namespace clean_architecture_dotnet.Infrastructure.Context
             builder.ApplyConfiguration(new ProductTypeConfiguration());
 
             builder.ApplyConfiguration(new ProductConfiguration());
+
+            #endregion
+
+            #region Sales Configuration
+
+            builder.ApplyConfiguration(new SaleConfiguration());
 
             #endregion
         }

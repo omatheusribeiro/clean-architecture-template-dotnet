@@ -27,6 +27,12 @@ namespace clean_architecture_dotnet.Infrastructure.EntitiesConfiguration.Product
                 .WithMany(u => u.Product)
                 .HasForeignKey(uc => uc.ProductTypeId);
 
+            builder
+                .HasMany(u => u.Sale)
+                .WithOne(a => a.Product)
+                .HasForeignKey(a => a.ProductId)
+                .OnDelete(DeleteBehavior.Cascade);
+
             builder.HasData(
                 new Product
                 {
