@@ -15,4 +15,11 @@
     <ProjectReference Include="..\clean-architecture-dotnet.Infrastructure\clean-architecture-dotnet.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Mappings\" />
+    <Folder Include="Services\Sales\" />
+    <Folder Include="Services\Products\" />
+    <Folder Include="Services\Users\" />
+  </ItemGroup>
+
 </Project>
