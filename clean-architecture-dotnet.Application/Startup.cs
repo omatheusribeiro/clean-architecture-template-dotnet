@@ -1,11 +1,7 @@
-﻿using clean_architecture_dotnet.Infrastructure.Repositories.Products.Interfaces;
-using clean_architecture_dotnet.Infrastructure.Repositories.Products;
-using clean_architecture_dotnet.Infrastructure.Repositories.Sales.Interfaces;
-using clean_architecture_dotnet.Infrastructure.Repositories.Sales;
-using clean_architecture_dotnet.Infrastructure.Repositories.Users.Interfaces;
-using clean_architecture_dotnet.Infrastructure.Repositories.Users;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using clean_architecture_dotnet.Application.Services.Users.Interfaces;
+using clean_architecture_dotnet.Application.Services.Users;
 
 namespace clean_architecture_dotnet.Application
 {
@@ -15,19 +11,7 @@ namespace clean_architecture_dotnet.Application
         {
             #region Users Repositories
 
-            services.AddScoped<IUserRepository, UserRepository>();
-
-            #endregion
-
-            #region Products Repositories
-
-            services.AddScoped<IProductRepository, ProductRepository>();
-
-            #endregion
-
-            #region Sale Repository
-
-            services.AddScoped<ISaleRepository, SaleRepository>();
+            services.AddScoped<IUserService, UserService>();
 
             #endregion
 
