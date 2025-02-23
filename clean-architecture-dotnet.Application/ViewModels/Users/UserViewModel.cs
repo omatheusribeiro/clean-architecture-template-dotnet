@@ -26,12 +26,10 @@ namespace clean_architecture_dotnet.Application.ViewModels.Users
         [DisplayName("Document")]
         public string Document { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "It is necessary to provide the user address.")]
         [DisplayName("Address")]
         public UserAddressViewModel Address { get; set; } = new UserAddressViewModel();
 
-        [Required(ErrorMessage = "It is necessary to provide the user contact.")]
         [DisplayName("Contact")]
-        public UserContact Contact { get; set; } = new UserContact();
+        public UserContactViewModel Contact { get; set; } = new UserContactViewModel();
     }
 }

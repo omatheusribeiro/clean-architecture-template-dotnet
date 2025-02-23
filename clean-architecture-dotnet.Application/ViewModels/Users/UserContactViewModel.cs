@@ -3,7 +3,7 @@ using System.ComponentModel;
 
 namespace clean_architecture_dotnet.Application.ViewModels.Users
 {
-    public class UserContact
+    public class UserContactViewModel
     {
         [DisplayName("Id")]
         public int Id { get; set; }

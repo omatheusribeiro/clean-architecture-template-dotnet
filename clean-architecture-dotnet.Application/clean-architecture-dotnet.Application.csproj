@@ -19,7 +19,6 @@
     <Folder Include="Mappings\" />
     <Folder Include="Services\Sales\" />
     <Folder Include="Services\Products\" />
-    <Folder Include="Services\Users\" />
   </ItemGroup>
 
 </Project>
