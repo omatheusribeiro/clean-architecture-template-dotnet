@@ -2,7 +2,7 @@
 
 namespace clean_architecture_dotnet.Infrastructure.Repositories.Users.Interfaces
 {
-    internal interface IUserContactRepository
+    public interface IUserContactRepository
     {
         Task<IEnumerable<UserContact>> GetAll();
         Task<UserContact> GetById(int id);

@@ -18,21 +18,21 @@ namespace clean_architecture_dotnet.Application.Services.Users
             _mapper = mapper;
         }
 
-        public async Task<Result<UserAddressViewModel>> Put(UserAddressViewModel user)
+        public async Task<Result<UserAddressViewModel>> Put(UserAddressViewModel address)
         {
             try
             {
-                var mapAddres = _mapper.Map<UserAddress>(user);
+                var mapAddress = _mapper.Map<UserAddress>(address);
 
-                var result = await _userAddressRepository.Put(mapAddres);
+                var result = await _userAddressRepository.Put(mapAddress);
 
-                var mapAddresModel = _mapper.Map<UserAddressViewModel>(result);
+                var mapAddressModel = _mapper.Map<UserAddressViewModel>(result);
 
-                return Result<UserAddressViewModel>.Ok(mapAddresModel);
+                return Result<UserAddressViewModel>.Ok(mapAddressModel);
             }
             catch (Exception ex)
             {
-                return Result<UserAddressViewModel>.Fail("There was an error editing the user addres: " + ex.Message, 500);
+                return Result<UserAddressViewModel>.Fail("There was an error editing the user address: " + ex.Message, 500);
             }
 
         }
