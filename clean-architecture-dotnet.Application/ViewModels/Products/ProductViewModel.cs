@@ -27,8 +27,5 @@ namespace clean_architecture_dotnet.Application.ViewModels.Products
         [Required(ErrorMessage = "It is necessary to provide the product type id.")]
         [DisplayName("ProductTypeId")]
         public int ProductTypeId { get; set; }
-
-        [DisplayName("Type")]
-        public ProductTypeViewModel Type { get; set; } = new ProductTypeViewModel();
     }
 }
