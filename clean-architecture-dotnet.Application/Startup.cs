@@ -4,6 +4,8 @@ using clean_architecture_dotnet.Application.Services.Users.Interfaces;
 using clean_architecture_dotnet.Application.Services.Users;
 using clean_architecture_dotnet.Application.Services.Products.Interfaces;
 using clean_architecture_dotnet.Application.Services.Products;
+using clean_architecture_dotnet.Application.Services.Sales.Interfaces;
+using clean_architecture_dotnet.Application.Services.Sales;
 
 namespace clean_architecture_dotnet.Application
 {
@@ -23,6 +25,12 @@ namespace clean_architecture_dotnet.Application
 
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IProductTypeService, ProductTypeService>();
+
+            #endregion
+
+            #region Sales Services
+
+            services.AddScoped<ISaleService, SaleService>();
 
             #endregion
 
