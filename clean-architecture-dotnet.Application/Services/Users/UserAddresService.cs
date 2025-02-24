@@ -3,13 +3,7 @@ using clean_architecture_dotnet.Application.Models.Http;
 using clean_architecture_dotnet.Application.Services.Users.Interfaces;
 using clean_architecture_dotnet.Application.ViewModels.Users;
 using clean_architecture_dotnet.Domain.Entities.Users;
-using clean_architecture_dotnet.Infrastructure.Repositories.Users;
 using clean_architecture_dotnet.Infrastructure.Repositories.Users.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace clean_architecture_dotnet.Application.Services.Users
 {
