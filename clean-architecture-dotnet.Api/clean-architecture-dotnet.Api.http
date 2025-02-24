@@ -1,6 +1,0 @@
-@clean_architecture_dotnet.Api_HostAddress = http://localhost:5212
-
-GET {{clean_architecture_dotnet.Api_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

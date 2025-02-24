@@ -18,7 +18,7 @@ namespace clean_architecture_dotnet.Infrastructure
         {
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
-                    configuration.GetConnectionString("DefaultConnection")));
+                    configuration.GetConnectionString("SQL-Connection")));
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 

@@ -1,4 +1,5 @@
-﻿using clean_architecture_dotnet.Api.Middlewares;
+﻿using clean_architecture_dotnet.Api.Config.MappingConfig;
+using clean_architecture_dotnet.Api.Middlewares;
 using clean_architecture_dotnet.Authentication.Validators;
 using clean_architecture_dotnet.Infrastructure.Authentication;
 using Microsoft.OpenApi.Models;
@@ -6,6 +7,8 @@ using Microsoft.OpenApi.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddCors();
+builder.Services.AddAutoMapperConfiguration();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
