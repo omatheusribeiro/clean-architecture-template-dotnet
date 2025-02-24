@@ -19,8 +19,4 @@
     <ProjectReference Include="..\clean-architecture-dotnet.Infrastructure\clean-architecture-dotnet.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\V1\Login\" />
-  </ItemGroup>
-
 </Project>

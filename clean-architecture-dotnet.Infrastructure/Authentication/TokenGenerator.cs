@@ -15,17 +15,14 @@ namespace clean_architecture_dotnet.Infrastructure.Authentication
             _jwtSettings = jwtSettings.Value;
         }
 
-        public string GenerateToken(string userId, string firstName, string lastName, string email)
+        public string GenerateToken(string email)
         {
             var key = Encoding.ASCII.GetBytes(_jwtSettings.SecretKey);
 
             var claims = new List<Claim>
-        {
-            new Claim(ClaimTypes.NameIdentifier, userId),
-            new Claim(ClaimTypes.Name, firstName),
-            new Claim(ClaimTypes.Surname, lastName),
-            new Claim(ClaimTypes.Email, email)
-        };
+            {
+                new Claim(ClaimTypes.Email, email)
+            };
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {

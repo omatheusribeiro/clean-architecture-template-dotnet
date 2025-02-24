@@ -6,6 +6,8 @@ using clean_architecture_dotnet.Application.Services.Products.Interfaces;
 using clean_architecture_dotnet.Application.Services.Products;
 using clean_architecture_dotnet.Application.Services.Sales.Interfaces;
 using clean_architecture_dotnet.Application.Services.Sales;
+using clean_architecture_dotnet.Application.Services.Login.Interfaces;
+using clean_architecture_dotnet.Application.Services.Login;
 
 namespace clean_architecture_dotnet.Application
 {
@@ -31,6 +33,12 @@ namespace clean_architecture_dotnet.Application
             #region Sales Services
 
             services.AddScoped<ISaleService, SaleService>();
+
+            #endregion
+
+            #region Login Services
+
+            services.AddScoped<ILoginService, LoginService>();
 
             #endregion
 

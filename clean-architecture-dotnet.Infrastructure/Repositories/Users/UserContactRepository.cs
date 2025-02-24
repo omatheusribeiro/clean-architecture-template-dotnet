@@ -24,6 +24,11 @@ namespace clean_architecture_dotnet.Infrastructure.Repositories.Users
             return await _context.UserContacts.AsNoTracking().Where(u => u.Id == id).FirstAsync();
         }
 
+        public async Task<UserContact> GetByEmail(string email)
+        {
+            return await _context.UserContacts.AsNoTracking().Where(u => u.Email == email).FirstAsync();
+        }
+
         public async Task<UserContact> Put(UserContact contact)
         {
             contact.ChangeDate = DateTime.UtcNow;
