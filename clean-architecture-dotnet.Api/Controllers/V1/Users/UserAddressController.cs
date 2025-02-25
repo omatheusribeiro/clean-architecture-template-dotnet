@@ -22,6 +22,9 @@ namespace clean_architecture_dotnet.Api.Controllers.V1.Users
         {
             var response = await _userAddressService.Put(address);
 
+            if (response.StatusCode == 500)
+                return BadRequest(response);
+
             return Ok(response);
         }
     }

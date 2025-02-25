@@ -22,6 +22,9 @@ namespace clean_architecture_dotnet.Api.Controllers.V1.Products
         {
             var response = await _productTypeService.Put(type);
 
+            if (response.StatusCode == 500)
+                return BadRequest(response);
+
             return Ok(response);
         }
 
@@ -30,6 +33,9 @@ namespace clean_architecture_dotnet.Api.Controllers.V1.Products
         public async Task<ActionResult<ProductTypeViewModel>> Post([FromBody] ProductTypeViewModel type)
         {
             var response = await _productTypeService.Post(type);
+
+            if (response.StatusCode == 500)
+                return BadRequest(response);
 
             return Ok(response);
         }

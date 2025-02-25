@@ -25,6 +25,9 @@ namespace clean_architecture_dotnet.Api.Controllers.V1.Sales
             if (response.StatusCode == 400)
                 return NotFound(response);
 
+            if (response.StatusCode == 500)
+                return BadRequest(response);
+
             return Ok(response);
 
         }
@@ -38,6 +41,9 @@ namespace clean_architecture_dotnet.Api.Controllers.V1.Sales
             if (response.StatusCode == 400)
                 return NotFound(response);
 
+            if (response.StatusCode == 500)
+                return BadRequest(response);
+
             return Ok(response);
 
         }
@@ -48,6 +54,9 @@ namespace clean_architecture_dotnet.Api.Controllers.V1.Sales
         {
             var response = await _saleService.Put(sale);
 
+            if (response.StatusCode == 500)
+                return BadRequest(response);
+
             return Ok(response);
         }
 
@@ -57,6 +66,9 @@ namespace clean_architecture_dotnet.Api.Controllers.V1.Sales
         {
             var response = await _saleService.Post(sale);
 
+            if (response.StatusCode == 500)
+                return BadRequest(response);
+
             return Ok(response);
         }
 
@@ -65,6 +77,9 @@ namespace clean_architecture_dotnet.Api.Controllers.V1.Sales
         public async Task<ActionResult<SaleViewModel>> Delete([FromBody] SaleViewModel sale)
         {
             var response = await _saleService.Delete(sale);
+
+            if (response.StatusCode == 500)
+                return BadRequest(response);
 
             return Ok(response);
         }

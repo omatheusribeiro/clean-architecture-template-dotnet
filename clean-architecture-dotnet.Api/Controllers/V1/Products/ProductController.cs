@@ -25,6 +25,9 @@ namespace clean_architecture_dotnet.Api.Controllers.V1.Products
             if (response.StatusCode == 400)
                 return NotFound(response);
 
+            if (response.StatusCode == 500)
+                return BadRequest(response);
+
             return Ok(response);
 
         }
@@ -38,6 +41,9 @@ namespace clean_architecture_dotnet.Api.Controllers.V1.Products
             if (response.StatusCode == 400)
                 return NotFound(response);
 
+            if (response.StatusCode == 500)
+                return BadRequest(response);
+
             return Ok(response);
 
         }
@@ -48,6 +54,9 @@ namespace clean_architecture_dotnet.Api.Controllers.V1.Products
         {
             var response = await _productService.Put(product);
 
+            if (response.StatusCode == 500)
+                return BadRequest(response);
+
             return Ok(response);
         }
 
@@ -57,6 +66,9 @@ namespace clean_architecture_dotnet.Api.Controllers.V1.Products
         {
             var response = await _productService.Post(product);
 
+            if (response.StatusCode == 500)
+                return BadRequest(response);
+
             return Ok(response);
         }
 
@@ -65,6 +77,9 @@ namespace clean_architecture_dotnet.Api.Controllers.V1.Products
         public async Task<ActionResult<ProductViewModel>> Delete([FromBody] ProductViewModel product)
         {
             var response = await _productService.Delete(product);
+
+            if (response.StatusCode == 500)
+                return BadRequest(response);
 
             return Ok(response);
         }
