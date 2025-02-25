@@ -3,6 +3,7 @@ using clean_architecture_dotnet.Application.Models.Http;
 using clean_architecture_dotnet.Application.Services.Products.Interfaces;
 using clean_architecture_dotnet.Application.ViewModels.Products;
 using clean_architecture_dotnet.Domain.Entities.Products;
+using clean_architecture_dotnet.Domain.Enums;
 using clean_architecture_dotnet.Infrastructure.Repositories.Products.Interfaces;
 
 namespace clean_architecture_dotnet.Application.Services.Products
@@ -30,7 +31,7 @@ namespace clean_architecture_dotnet.Application.Services.Products
                 var products = await _productRepository.GetAll();
 
                 if (products is null)
-                    return Result<IEnumerable<ProductViewModel>>.Fail("Unable to identify products in the database.", 404);
+                    return Result<IEnumerable<ProductViewModel>>.Fail("Unable to identify products in the database.", (int)HttpStatus.NotFound);
 
                 var mapProducts = _mapper.Map<IEnumerable<ProductViewModel>>(products);
 
@@ -39,7 +40,7 @@ namespace clean_architecture_dotnet.Application.Services.Products
             }
             catch (Exception ex)
             {
-                return Result<IEnumerable<ProductViewModel>>.Fail("There was an error listing products: " + ex.Message, 500);
+                return Result<IEnumerable<ProductViewModel>>.Fail("There was an error listing products: " + ex.Message, (int)HttpStatus.BadRequest);
             }
 
         }
@@ -51,7 +52,7 @@ namespace clean_architecture_dotnet.Application.Services.Products
                 var product = await _productRepository.GetById(id);
 
                 if (product is null)
-                    return Result<ProductViewModel>.Fail("product not found.", 404);
+                    return Result<ProductViewModel>.Fail("product not found.", (int)HttpStatus.NotFound);
 
                 var mapProduct = _mapper.Map<ProductViewModel>(product);
 
@@ -59,7 +60,7 @@ namespace clean_architecture_dotnet.Application.Services.Products
             }
             catch (Exception ex)
             {
-                return Result<ProductViewModel>.Fail("There was an error when searching for the product: " + ex.Message, 500);
+                return Result<ProductViewModel>.Fail("There was an error when searching for the product: " + ex.Message, (int)HttpStatus.BadRequest);
             }
 
         }
@@ -71,7 +72,7 @@ namespace clean_architecture_dotnet.Application.Services.Products
                 var productType = await _productTypeRepository.GetById(product.ProductTypeId);
 
                 if(productType is null)
-                    return Result<ProductViewModel>.Fail("product type not found.", 404);
+                    return Result<ProductViewModel>.Fail("product type not found.", (int)HttpStatus.NotFound);
 
                 var mapProduct = _mapper.Map<Product>(product);
 
@@ -83,7 +84,7 @@ namespace clean_architecture_dotnet.Application.Services.Products
             }
             catch (Exception ex)
             {
-                return Result<ProductViewModel>.Fail("There was an error editing the product: " + ex.Message, 500);
+                return Result<ProductViewModel>.Fail("There was an error editing the product: " + ex.Message, (int)HttpStatus.BadRequest);
             }
         }
 
@@ -94,7 +95,7 @@ namespace clean_architecture_dotnet.Application.Services.Products
                 var productType = await _productTypeRepository.GetById(product.ProductTypeId);
 
                 if (productType is null)
-                    return Result<ProductViewModel>.Fail("product type not found.", 404);
+                    return Result<ProductViewModel>.Fail("product type not found.", (int)HttpStatus.NotFound);
 
                 var mapProduct = _mapper.Map<Product>(product);
 
@@ -106,7 +107,7 @@ namespace clean_architecture_dotnet.Application.Services.Products
             }
             catch (Exception ex)
             {
-                return Result<ProductViewModel>.Fail("There was an error registering the product: " + ex.Message, 500);
+                return Result<ProductViewModel>.Fail("There was an error registering the product: " + ex.Message, (int)HttpStatus.BadRequest);
             }
         }
 
@@ -117,7 +118,7 @@ namespace clean_architecture_dotnet.Application.Services.Products
                 var productType = await _productTypeRepository.GetById(product.ProductTypeId);
 
                 if (productType is null)
-                    return Result<ProductViewModel>.Fail("product type not found.", 404);
+                    return Result<ProductViewModel>.Fail("product type not found.", (int)HttpStatus.NotFound);
 
                 var mapProduct = _mapper.Map<Product>(product);
 
@@ -129,7 +130,7 @@ namespace clean_architecture_dotnet.Application.Services.Products
             }
             catch (Exception ex)
             {
-                return Result<ProductViewModel>.Fail("There was an error deleting the product: " + ex.Message, 500);
+                return Result<ProductViewModel>.Fail("There was an error deleting the product: " + ex.Message, (int)HttpStatus.BadRequest);
             }
 
         }

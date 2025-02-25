@@ -3,6 +3,7 @@ using clean_architecture_dotnet.Application.Models.Http;
 using clean_architecture_dotnet.Application.Services.Users.Interfaces;
 using clean_architecture_dotnet.Application.ViewModels.Users;
 using clean_architecture_dotnet.Domain.Entities.Users;
+using clean_architecture_dotnet.Domain.Enums;
 using clean_architecture_dotnet.Infrastructure.Repositories.Users.Interfaces;
 
 namespace clean_architecture_dotnet.Application.Services.Users
@@ -32,7 +33,7 @@ namespace clean_architecture_dotnet.Application.Services.Users
             }
             catch (Exception ex)
             {
-                return Result<UserContactViewModel>.Fail("There was an error editing the user contact: " + ex.Message, 500);
+                return Result<UserContactViewModel>.Fail("There was an error editing the user contact: " + ex.Message, (int)HttpStatus.BadRequest);
             }
 
         }

@@ -3,6 +3,7 @@ using clean_architecture_dotnet.Application.Models.Http;
 using clean_architecture_dotnet.Application.Services.Users.Interfaces;
 using clean_architecture_dotnet.Application.ViewModels.Users;
 using clean_architecture_dotnet.Domain.Entities.Users;
+using clean_architecture_dotnet.Domain.Enums;
 using clean_architecture_dotnet.Infrastructure.Repositories.Users.Interfaces;
 
 namespace clean_architecture_dotnet.Application.Services.Users
@@ -33,7 +34,7 @@ namespace clean_architecture_dotnet.Application.Services.Users
                 var users = await _userRepository.GetAll();
 
                 if (users is null)
-                    return Result<IEnumerable<UserViewModel>>.Fail("Unable to identify users in the database.", 404);
+                    return Result<IEnumerable<UserViewModel>>.Fail("Unable to identify users in the database.", (int)HttpStatus.NotFound);
 
                 var mapUsers = _mapper.Map<IEnumerable<UserViewModel>>(users);
 
@@ -42,7 +43,7 @@ namespace clean_architecture_dotnet.Application.Services.Users
             }
             catch (Exception ex)
             {
-                return Result<IEnumerable<UserViewModel>>.Fail("There was an error listing users: " + ex.Message, 500);
+                return Result<IEnumerable<UserViewModel>>.Fail("There was an error listing users: " + ex.Message, (int)HttpStatus.BadRequest);
             }
 
         }
@@ -54,7 +55,7 @@ namespace clean_architecture_dotnet.Application.Services.Users
                 var user = await _userRepository.GetById(id);
 
                 if (user is null)
-                    return Result<UserViewModel>.Fail("User not found.", 404);
+                    return Result<UserViewModel>.Fail("User not found.", (int)HttpStatus.NotFound);
 
                 var mapUser = _mapper.Map<UserViewModel>(user);
 
@@ -62,7 +63,7 @@ namespace clean_architecture_dotnet.Application.Services.Users
             }
             catch (Exception ex)
             {
-                return Result<UserViewModel>.Fail("There was an error when searching for the user: " + ex.Message, 500);
+                return Result<UserViewModel>.Fail("There was an error when searching for the user: " + ex.Message, (int)HttpStatus.BadRequest);
             }
 
         }
@@ -76,12 +77,12 @@ namespace clean_architecture_dotnet.Application.Services.Users
                 var mapContactModel = new UserContactViewModel();
 
                 if (user is null)
-                    return Result<UserViewModel>.Fail("There is missing information to perform user change.", 404);
+                    return Result<UserViewModel>.Fail("There is missing information to perform user change.", (int)HttpStatus.NotFound);
 
                 var userEntity = await _userRepository.GetById(user.Id);
 
                 if (userEntity is null)
-                    return Result<UserViewModel>.Fail("User not found.", 404);
+                    return Result<UserViewModel>.Fail("User not found.", (int)HttpStatus.NotFound);
 
                 var mapUser = _mapper.Map<User>(user);
 
@@ -94,7 +95,7 @@ namespace clean_architecture_dotnet.Application.Services.Users
                     var addressEntity = await _userAddressRepository.GetById(user.Address.Id);
 
                     if (addressEntity is null)
-                        return Result<UserViewModel>.Fail("Address not found.", 404);
+                        return Result<UserViewModel>.Fail("Address not found.", (int)HttpStatus.NotFound);
 
                     var mapAddress = _mapper.Map<UserAddress>(user.Address);
                     var resultAddress = await _userAddressRepository.Put(mapAddress);
@@ -107,7 +108,7 @@ namespace clean_architecture_dotnet.Application.Services.Users
                     var contactEntity = await _userContactRepository.GetById(user.Contact.Id);
 
                     if (contactEntity is null)
-                        return Result<UserViewModel>.Fail("Contact not found.", 404);
+                        return Result<UserViewModel>.Fail("Contact not found.", (int)HttpStatus.NotFound);
 
                     var mapContact = _mapper.Map<UserContact>(user.Contact);
                     var resultContact = await _userContactRepository.Put(mapContact);
@@ -119,7 +120,7 @@ namespace clean_architecture_dotnet.Application.Services.Users
             }
             catch (Exception ex)
             {
-                return Result<UserViewModel>.Fail("There was an error editing the user: " + ex.Message, 500);
+                return Result<UserViewModel>.Fail("There was an error editing the user: " + ex.Message, (int)HttpStatus.BadRequest);
             }
 
         }
@@ -129,13 +130,13 @@ namespace clean_architecture_dotnet.Application.Services.Users
             try
             {
                 if(user is null)
-                    return Result<UserViewModel>.Fail("There is missing information to perform user creation.", 404);
+                    return Result<UserViewModel>.Fail("There is missing information to perform user creation.", (int)HttpStatus.NotFound);
 
                 if (user.Address is null)
-                    return Result<UserViewModel>.Fail("There is missing information to perform user address creation.", 404);
+                    return Result<UserViewModel>.Fail("There is missing information to perform user address creation.", (int)HttpStatus.NotFound);
 
                 if (user.Contact is null)
-                    return Result<UserViewModel>.Fail("There is missing information to perform user address creation.", 404);
+                    return Result<UserViewModel>.Fail("There is missing information to perform user address creation.", (int)HttpStatus.NotFound);
 
                 var mapUser = _mapper.Map<User>(user);
                 var mapAddress = _mapper.Map<UserAddress>(user.Address);
@@ -156,7 +157,7 @@ namespace clean_architecture_dotnet.Application.Services.Users
             }
             catch (Exception ex)
             {
-                return Result<UserViewModel>.Fail("There was an error registering the user: " + ex.Message, 500);
+                return Result<UserViewModel>.Fail("There was an error registering the user: " + ex.Message, (int)HttpStatus.BadRequest);
             }
 
         }
@@ -166,26 +167,26 @@ namespace clean_architecture_dotnet.Application.Services.Users
             try
             {
                 if (user is null)
-                    return Result<UserViewModel>.Fail("There is missing information to delete the user.", 404);
+                    return Result<UserViewModel>.Fail("There is missing information to delete the user.", (int)HttpStatus.NotFound);
 
                 if (user.Address is null)
-                    return Result<UserViewModel>.Fail("There is missing information to delete the user address.", 404);
+                    return Result<UserViewModel>.Fail("There is missing information to delete the user address.", (int)HttpStatus.NotFound);
 
                 if (user.Contact is null)
-                    return Result<UserViewModel>.Fail("There is missing information to delete the user contact.", 404);
+                    return Result<UserViewModel>.Fail("There is missing information to delete the user contact.", (int)HttpStatus.NotFound);
 
                 var userEntity = await _userRepository.GetById(user.Id);
                 var addressEntity = await _userAddressRepository.GetById(user.Address.Id);
                 var contactEntity = await _userContactRepository.GetById(user.Contact.Id);
 
                 if (userEntity is null)
-                    return Result<UserViewModel>.Fail("User not found.", 404);
+                    return Result<UserViewModel>.Fail("User not found.", (int)HttpStatus.NotFound);
 
                 if (addressEntity is null)
-                    return Result<UserViewModel>.Fail("Address not found.", 404);
+                    return Result<UserViewModel>.Fail("Address not found.", (int)HttpStatus.NotFound);
 
                 if (contactEntity is null)
-                    return Result<UserViewModel>.Fail("Contact not found.", 404);
+                    return Result<UserViewModel>.Fail("Contact not found.", (int)HttpStatus.NotFound);
 
                 var mapUser = _mapper.Map<User>(user);
                 var mapAddress = _mapper.Map<UserAddress>(user.Address);
@@ -201,7 +202,7 @@ namespace clean_architecture_dotnet.Application.Services.Users
             }
             catch (Exception ex)
             {
-                return Result<UserViewModel>.Fail("There was an error deleting the user: " + ex.Message, 500);
+                return Result<UserViewModel>.Fail("There was an error deleting the user: " + ex.Message, (int)HttpStatus.BadRequest);
             }
 
         }

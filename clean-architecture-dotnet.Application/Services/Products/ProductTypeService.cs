@@ -3,6 +3,7 @@ using clean_architecture_dotnet.Application.Models.Http;
 using clean_architecture_dotnet.Application.Services.Products.Interfaces;
 using clean_architecture_dotnet.Application.ViewModels.Products;
 using clean_architecture_dotnet.Domain.Entities.Products;
+using clean_architecture_dotnet.Domain.Enums;
 using clean_architecture_dotnet.Infrastructure.Repositories.Products.Interfaces;
 
 namespace clean_architecture_dotnet.Application.Services.Products
@@ -32,7 +33,7 @@ namespace clean_architecture_dotnet.Application.Services.Products
             }
             catch (Exception ex)
             {
-                return Result<ProductTypeViewModel>.Fail("There was an error editing the product type: " + ex.Message, 500);
+                return Result<ProductTypeViewModel>.Fail("There was an error editing the product type: " + ex.Message, (int)HttpStatus.BadRequest);
             }
         }
 
@@ -51,7 +52,7 @@ namespace clean_architecture_dotnet.Application.Services.Products
             }
             catch (Exception ex)
             {
-                return Result<ProductTypeViewModel>.Fail("There was an error registering the product type: " + ex.Message, 500);
+                return Result<ProductTypeViewModel>.Fail("There was an error registering the product type: " + ex.Message, (int)HttpStatus.BadRequest);
             }
         }
     }

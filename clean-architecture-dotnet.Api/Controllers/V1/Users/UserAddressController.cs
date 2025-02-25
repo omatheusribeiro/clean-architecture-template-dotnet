@@ -1,5 +1,6 @@
 ﻿using clean_architecture_dotnet.Application.Services.Users.Interfaces;
 using clean_architecture_dotnet.Application.ViewModels.Users;
+using clean_architecture_dotnet.Domain.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,7 +23,10 @@ namespace clean_architecture_dotnet.Api.Controllers.V1.Users
         {
             var response = await _userAddressService.Put(address);
 
-            if (response.StatusCode == 500)
+            if (response.StatusCode == (int)HttpStatus.NotFound)
+                return NotFound(response);
+
+            if (response.StatusCode == (int)HttpStatus.BadRequest)
                 return BadRequest(response);
 
             return Ok(response);

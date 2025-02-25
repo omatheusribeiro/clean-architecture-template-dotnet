@@ -1,5 +1,6 @@
 ﻿using clean_architecture_dotnet.Application.Services.Products.Interfaces;
 using clean_architecture_dotnet.Application.ViewModels.Products;
+using clean_architecture_dotnet.Domain.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,7 +23,10 @@ namespace clean_architecture_dotnet.Api.Controllers.V1.Products
         {
             var response = await _productTypeService.Put(type);
 
-            if (response.StatusCode == 500)
+            if (response.StatusCode == (int)HttpStatus.NotFound)
+                return NotFound(response);
+
+            if (response.StatusCode == (int)HttpStatus.BadRequest)
                 return BadRequest(response);
 
             return Ok(response);
@@ -34,7 +38,10 @@ namespace clean_architecture_dotnet.Api.Controllers.V1.Products
         {
             var response = await _productTypeService.Post(type);
 
-            if (response.StatusCode == 500)
+            if (response.StatusCode == (int)HttpStatus.NotFound)
+                return NotFound(response);
+
+            if (response.StatusCode == (int)HttpStatus.BadRequest)
                 return BadRequest(response);
 
             return Ok(response);

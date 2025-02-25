@@ -3,6 +3,7 @@ using clean_architecture_dotnet.Application.Models.Http;
 using clean_architecture_dotnet.Application.Services.Sales.Interfaces;
 using clean_architecture_dotnet.Application.ViewModels.Sales;
 using clean_architecture_dotnet.Domain.Entities.Sales;
+using clean_architecture_dotnet.Domain.Enums;
 using clean_architecture_dotnet.Infrastructure.Repositories.Products.Interfaces;
 using clean_architecture_dotnet.Infrastructure.Repositories.Sales.Interfaces;
 using clean_architecture_dotnet.Infrastructure.Repositories.Users.Interfaces;
@@ -35,7 +36,7 @@ namespace clean_architecture_dotnet.Application.Services.Sales
                 var sales = await _saleRepository.GetAll();
 
                 if (sales is null)
-                    return Result<IEnumerable<SaleViewModel>>.Fail("Unable to identify sales in the database.", 404);
+                    return Result<IEnumerable<SaleViewModel>>.Fail("Unable to identify sales in the database.", (int)HttpStatus.NotFound);
 
                 var mapSales = _mapper.Map<IEnumerable<SaleViewModel>>(sales);
 
@@ -44,7 +45,7 @@ namespace clean_architecture_dotnet.Application.Services.Sales
             }
             catch (Exception ex)
             {
-                return Result<IEnumerable<SaleViewModel>>.Fail("There was an error listing sales: " + ex.Message, 500);
+                return Result<IEnumerable<SaleViewModel>>.Fail("There was an error listing sales: " + ex.Message, (int)HttpStatus.BadRequest);
             }
 
         }
@@ -56,7 +57,7 @@ namespace clean_architecture_dotnet.Application.Services.Sales
                 var sale = await _saleRepository.GetById(id);
 
                 if (sale is null)
-                    return Result<SaleViewModel>.Fail("sale not found.", 404);
+                    return Result<SaleViewModel>.Fail("sale not found.", (int)HttpStatus.NotFound);
 
                 var mapSale = _mapper.Map<SaleViewModel>(sale);
 
@@ -64,7 +65,7 @@ namespace clean_architecture_dotnet.Application.Services.Sales
             }
             catch (Exception ex)
             {
-                return Result<SaleViewModel>.Fail("There was an error when searching for the sale: " + ex.Message, 500);
+                return Result<SaleViewModel>.Fail("There was an error when searching for the sale: " + ex.Message, (int)HttpStatus.BadRequest);
             }
         }
 
@@ -77,10 +78,10 @@ namespace clean_architecture_dotnet.Application.Services.Sales
                 var user = await _userRepository.GetById(sale.UserId);
 
                 if (product is null)
-                    return Result<SaleViewModel>.Fail("Product not found.", 404);
+                    return Result<SaleViewModel>.Fail("Product not found.", (int)HttpStatus.NotFound);
 
                 if (user is null)
-                    return Result<SaleViewModel>.Fail("User not found.", 404);
+                    return Result<SaleViewModel>.Fail("User not found.", (int)HttpStatus.NotFound);
 
                 var mapSale = _mapper.Map<Sale>(sale);
 
@@ -92,7 +93,7 @@ namespace clean_architecture_dotnet.Application.Services.Sales
             }
             catch (Exception ex)
             {
-                return Result<SaleViewModel>.Fail("There was an error editing the sale: " + ex.Message, 500);
+                return Result<SaleViewModel>.Fail("There was an error editing the sale: " + ex.Message, (int)HttpStatus.BadRequest);
             }
         }
 
@@ -105,10 +106,10 @@ namespace clean_architecture_dotnet.Application.Services.Sales
                 var user = await _userRepository.GetById(sale.UserId);
 
                 if (product is null)
-                    return Result<SaleViewModel>.Fail("Product not found.", 404);
+                    return Result<SaleViewModel>.Fail("Product not found.", (int)HttpStatus.NotFound);
 
                 if (user is null)
-                    return Result<SaleViewModel>.Fail("User not found.", 404);
+                    return Result<SaleViewModel>.Fail("User not found.", (int)HttpStatus.NotFound);
 
                 var mapSale = _mapper.Map<Sale>(sale);
 
@@ -120,7 +121,7 @@ namespace clean_architecture_dotnet.Application.Services.Sales
             }
             catch (Exception ex)
             {
-                return Result<SaleViewModel>.Fail("There was an error registering the sale: " + ex.Message, 500);
+                return Result<SaleViewModel>.Fail("There was an error registering the sale: " + ex.Message, (int)HttpStatus.BadRequest);
             }
         }
 
@@ -133,10 +134,10 @@ namespace clean_architecture_dotnet.Application.Services.Sales
                 var user = await _userRepository.GetById(sale.UserId);
 
                 if (product is null)
-                    return Result<SaleViewModel>.Fail("Product not found.", 404);
+                    return Result<SaleViewModel>.Fail("Product not found.", (int)HttpStatus.NotFound);
 
                 if (user is null)
-                    return Result<SaleViewModel>.Fail("User not found.", 404);
+                    return Result<SaleViewModel>.Fail("User not found.", (int)HttpStatus.NotFound);
 
                 var mapSale = _mapper.Map<Sale>(sale);
 
@@ -148,7 +149,7 @@ namespace clean_architecture_dotnet.Application.Services.Sales
             }
             catch (Exception ex)
             {
-                return Result<SaleViewModel>.Fail("There was an error deleting the sale: " + ex.Message, 500);
+                return Result<SaleViewModel>.Fail("There was an error deleting the sale: " + ex.Message, (int)HttpStatus.BadRequest);
             }
 
         }

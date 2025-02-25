@@ -1,5 +1,6 @@
 ﻿using clean_architecture_dotnet.Application.Services.Products.Interfaces;
 using clean_architecture_dotnet.Application.ViewModels.Products;
+using clean_architecture_dotnet.Domain.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,10 +23,10 @@ namespace clean_architecture_dotnet.Api.Controllers.V1.Products
         {
             var response = await _productService.GetAll();
 
-            if (response.StatusCode == 400)
+            if (response.StatusCode == (int)HttpStatus.NotFound)
                 return NotFound(response);
 
-            if (response.StatusCode == 500)
+            if (response.StatusCode == (int)HttpStatus.BadRequest)
                 return BadRequest(response);
 
             return Ok(response);
@@ -38,10 +39,10 @@ namespace clean_architecture_dotnet.Api.Controllers.V1.Products
         {
             var response = await _productService.GetById(id);
 
-            if (response.StatusCode == 400)
+            if (response.StatusCode == (int)HttpStatus.NotFound)
                 return NotFound(response);
 
-            if (response.StatusCode == 500)
+            if (response.StatusCode == (int)HttpStatus.BadRequest)
                 return BadRequest(response);
 
             return Ok(response);
@@ -54,7 +55,10 @@ namespace clean_architecture_dotnet.Api.Controllers.V1.Products
         {
             var response = await _productService.Put(product);
 
-            if (response.StatusCode == 500)
+            if (response.StatusCode == (int)HttpStatus.NotFound)
+                return NotFound(response);
+
+            if (response.StatusCode == (int)HttpStatus.BadRequest)
                 return BadRequest(response);
 
             return Ok(response);
@@ -66,7 +70,10 @@ namespace clean_architecture_dotnet.Api.Controllers.V1.Products
         {
             var response = await _productService.Post(product);
 
-            if (response.StatusCode == 500)
+            if (response.StatusCode == (int)HttpStatus.NotFound)
+                return NotFound(response);
+
+            if (response.StatusCode == (int)HttpStatus.BadRequest)
                 return BadRequest(response);
 
             return Ok(response);
@@ -78,7 +85,10 @@ namespace clean_architecture_dotnet.Api.Controllers.V1.Products
         {
             var response = await _productService.Delete(product);
 
-            if (response.StatusCode == 500)
+            if (response.StatusCode == (int)HttpStatus.NotFound)
+                return NotFound(response);
+
+            if (response.StatusCode == (int)HttpStatus.BadRequest)
                 return BadRequest(response);
 
             return Ok(response);

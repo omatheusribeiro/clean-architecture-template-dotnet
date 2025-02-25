@@ -1,5 +1,6 @@
 ﻿using clean_architecture_dotnet.Application.Models.Http;
 using clean_architecture_dotnet.Application.Services.Login.Interfaces;
+using clean_architecture_dotnet.Domain.Enums;
 using clean_architecture_dotnet.Infrastructure.Authentication;
 using clean_architecture_dotnet.Infrastructure.Repositories.Users.Interfaces;
 
@@ -21,12 +22,12 @@ namespace clean_architecture_dotnet.Application.Services.Login
             try
             {
                 if (string.IsNullOrEmpty(email))
-                    return Result<string>.Fail("Unable to identify email in the database.", 404);
+                    return Result<string>.Fail("Unable to identify email in the database.", (int)HttpStatus.NotFound);
 
                 var result = await _userContactRepository.GetByEmail(email);
 
                 if (result is null)
-                    return Result<string>.Fail("Unable to identify email in the database.", 404);
+                    return Result<string>.Fail("Unable to identify email in the database.", (int)HttpStatus.NotFound);
 
                 var token = _tokenGenerator.GenerateToken(result.Email);
 
@@ -35,7 +36,7 @@ namespace clean_architecture_dotnet.Application.Services.Login
             }
             catch (Exception ex)
             {
-                return Result<string>.Fail("There was an error generating the token: " + ex.Message, 500);
+                return Result<string>.Fail("There was an error generating the token: " + ex.Message, (int)HttpStatus.BadRequest);
             }
 
         }
