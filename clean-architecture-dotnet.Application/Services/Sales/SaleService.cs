@@ -3,18 +3,28 @@ using clean_architecture_dotnet.Application.Models.Http;
 using clean_architecture_dotnet.Application.Services.Sales.Interfaces;
 using clean_architecture_dotnet.Application.ViewModels.Sales;
 using clean_architecture_dotnet.Domain.Entities.Sales;
+using clean_architecture_dotnet.Infrastructure.Repositories.Products.Interfaces;
 using clean_architecture_dotnet.Infrastructure.Repositories.Sales.Interfaces;
+using clean_architecture_dotnet.Infrastructure.Repositories.Users.Interfaces;
 
 namespace clean_architecture_dotnet.Application.Services.Sales
 {
     public class SaleService : ISaleService
     {
-        private ISaleRepository _saleRepository;
+        private readonly ISaleRepository _saleRepository;
+        private readonly IProductRepository _productRepository;
+        private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
 
-        public SaleService(IMapper mapper, ISaleRepository saleRepository)
+        public SaleService(
+            ISaleRepository saleRepository,
+            IProductRepository productRepository,
+            IUserRepository userRepository,
+            IMapper mapper)
         {
             _saleRepository = saleRepository;
+            _productRepository = productRepository;
+            _userRepository = userRepository;
             _mapper = mapper;
         }
 
@@ -62,6 +72,16 @@ namespace clean_architecture_dotnet.Application.Services.Sales
         {
             try
             {
+                var product = await _productRepository.GetById(sale.ProductId);
+
+                var user = await _userRepository.GetById(sale.UserId);
+
+                if (product is null)
+                    return Result<SaleViewModel>.Fail("Product not found.", 404);
+
+                if (user is null)
+                    return Result<SaleViewModel>.Fail("User not found.", 404);
+
                 var mapSale = _mapper.Map<Sale>(sale);
 
                 var result = await _saleRepository.Put(mapSale);
@@ -80,6 +100,15 @@ namespace clean_architecture_dotnet.Application.Services.Sales
         {
             try
             {
+                var product = await _productRepository.GetById(sale.ProductId);
+
+                var user = await _userRepository.GetById(sale.UserId);
+
+                if (product is null)
+                    return Result<SaleViewModel>.Fail("Product not found.", 404);
+
+                if (user is null)
+                    return Result<SaleViewModel>.Fail("User not found.", 404);
 
                 var mapSale = _mapper.Map<Sale>(sale);
 
@@ -99,6 +128,15 @@ namespace clean_architecture_dotnet.Application.Services.Sales
         {
             try
             {
+                var product = await _productRepository.GetById(sale.ProductId);
+
+                var user = await _userRepository.GetById(sale.UserId);
+
+                if (product is null)
+                    return Result<SaleViewModel>.Fail("Product not found.", 404);
+
+                if (user is null)
+                    return Result<SaleViewModel>.Fail("User not found.", 404);
 
                 var mapSale = _mapper.Map<Sale>(sale);
 
