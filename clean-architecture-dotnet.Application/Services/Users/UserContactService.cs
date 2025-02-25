@@ -9,7 +9,7 @@ namespace clean_architecture_dotnet.Application.Services.Users
 {
     public class UserContactService : IUserContactService
     {
-        private IUserContactRepository _userContactRepository;
+        private readonly IUserContactRepository _userContactRepository;
         private readonly IMapper _mapper;
 
         public UserContactService(IMapper mapper, IUserContactRepository userContactRepository)

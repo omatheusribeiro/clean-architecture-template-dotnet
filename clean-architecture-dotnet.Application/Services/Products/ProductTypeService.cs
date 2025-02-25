@@ -9,7 +9,7 @@ namespace clean_architecture_dotnet.Application.Services.Products
 {
     public class ProductTypeService : IProductTypeService
     {
-        private IProductTypeRepository _productTypeRepository;
+        private readonly IProductTypeRepository _productTypeRepository;
         private readonly IMapper _mapper;
 
         public ProductTypeService(IMapper mapper, IProductTypeRepository productTypeRepository)

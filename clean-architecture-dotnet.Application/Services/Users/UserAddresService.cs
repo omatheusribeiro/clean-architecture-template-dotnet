@@ -9,7 +9,7 @@ namespace clean_architecture_dotnet.Application.Services.Users
 {
     public class UserAddresService : IUserAddressService
     {
-        private IUserAddressRepository _userAddressRepository;
+        private readonly IUserAddressRepository _userAddressRepository;
         private readonly IMapper _mapper;
 
         public UserAddresService(IMapper mapper, IUserAddressRepository userAddressRepository)
