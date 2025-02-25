@@ -9,12 +9,17 @@ namespace clean_architecture_dotnet.Application.Services.Products
 {
     public class ProductService : IProductService
     {
-        private IProductRepository _productRepository;
+        private readonly IProductRepository _productRepository;
+        private readonly IProductTypeRepository _productTypeRepository;
         private readonly IMapper _mapper;
 
-        public ProductService(IMapper mapper, IProductRepository productRepository)
+        public ProductService(
+            IProductRepository productRepository,
+            IProductTypeRepository productTypeRepository,
+            IMapper mapper)
         {
             _productRepository = productRepository;
+            _productTypeRepository = productTypeRepository;
             _mapper = mapper;
         }
 
@@ -63,6 +68,11 @@ namespace clean_architecture_dotnet.Application.Services.Products
         {
             try
             {
+                var productType = await _productTypeRepository.GetById(product.ProductTypeId);
+
+                if(productType is null)
+                    return Result<ProductViewModel>.Fail("product type not found.", 404);
+
                 var mapProduct = _mapper.Map<Product>(product);
 
                 var result = await _productRepository.Put(mapProduct);
@@ -81,6 +91,10 @@ namespace clean_architecture_dotnet.Application.Services.Products
         {
             try
             {
+                var productType = await _productTypeRepository.GetById(product.ProductTypeId);
+
+                if (productType is null)
+                    return Result<ProductViewModel>.Fail("product type not found.", 404);
 
                 var mapProduct = _mapper.Map<Product>(product);
 
@@ -100,6 +114,10 @@ namespace clean_architecture_dotnet.Application.Services.Products
         {
             try
             {
+                var productType = await _productTypeRepository.GetById(product.ProductTypeId);
+
+                if (productType is null)
+                    return Result<ProductViewModel>.Fail("product type not found.", 404);
 
                 var mapProduct = _mapper.Map<Product>(product);
 

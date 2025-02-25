@@ -71,42 +71,49 @@ namespace clean_architecture_dotnet.Application.Services.Users
         {
             try
             {
+                var mapUserModel = new UserViewModel();
+                var mapAddressModel = new UserAddressViewModel();
+                var mapContactModel = new UserContactViewModel();
+
                 if (user is null)
                     return Result<UserViewModel>.Fail("There is missing information to perform user change.", 404);
 
-                if (user.Address is null)
-                    return Result<UserViewModel>.Fail("There is missing information to perform user address change.", 404);
-
-                if (user.Contact is null)
-                    return Result<UserViewModel>.Fail("There is missing information to perform user address change.", 404);
-
                 var userEntity = await _userRepository.GetById(user.Id);
-                var addressEntity = await _userAddressRepository.GetById(user.Address.Id);
-                var contactEntity = await _userContactRepository.GetById(user.Contact.Id);
 
                 if (userEntity is null)
                     return Result<UserViewModel>.Fail("User not found.", 404);
 
-                if (addressEntity is null)
-                    return Result<UserViewModel>.Fail("Address not found.", 404);
-
-                if (contactEntity is null)
-                    return Result<UserViewModel>.Fail("Contact not found.", 404);
-
                 var mapUser = _mapper.Map<User>(user);
-                var mapAddress = _mapper.Map<UserAddress>(user.Address);
-                var mapContact = _mapper.Map<UserContact>(user.Contact);
 
                 var resultUser = await _userRepository.Put(mapUser);
-                var resultAddress = await _userAddressRepository.Put(mapAddress);
-                var resultContact = await _userContactRepository.Put(mapContact);
 
-                var mapUserModel = _mapper.Map<UserViewModel>(resultUser);
-                var mapAddressModel = _mapper.Map<UserAddressViewModel>(resultAddress);
-                var mapContactModel = _mapper.Map<UserContactViewModel>(resultContact);
+                mapUserModel = _mapper.Map<UserViewModel>(resultUser);
 
-                mapUserModel.Address = mapAddressModel;
-                mapUserModel.Contact = mapContactModel;
+                if (user.Address is not null)
+                {
+                    var addressEntity = await _userAddressRepository.GetById(user.Address.Id);
+
+                    if (addressEntity is null)
+                        return Result<UserViewModel>.Fail("Address not found.", 404);
+
+                    var mapAddress = _mapper.Map<UserAddress>(user.Address);
+                    var resultAddress = await _userAddressRepository.Put(mapAddress);
+                    mapAddressModel = _mapper.Map<UserAddressViewModel>(resultAddress);
+                    mapUserModel.Address = mapAddressModel;
+                }
+
+                if (user.Contact is not null)
+                {
+                    var contactEntity = await _userContactRepository.GetById(user.Contact.Id);
+
+                    if (contactEntity is null)
+                        return Result<UserViewModel>.Fail("Contact not found.", 404);
+
+                    var mapContact = _mapper.Map<UserContact>(user.Contact);
+                    var resultContact = await _userContactRepository.Put(mapContact);
+                    mapContactModel = _mapper.Map<UserContactViewModel>(resultContact);
+                    mapUserModel.Contact = mapContactModel;
+                }
 
                 return Result<UserViewModel>.Ok(mapUserModel);
             }
