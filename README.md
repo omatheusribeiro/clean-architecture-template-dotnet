@@ -1,1 +1,1 @@
-# 🛠 Clean Architecture Model for .Net Core 8
+# 🛠 Clean Architecture Template for .Net Core 8
