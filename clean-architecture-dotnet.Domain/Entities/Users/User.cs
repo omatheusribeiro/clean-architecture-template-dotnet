@@ -8,8 +8,13 @@ namespace clean_architecture_dotnet.Domain.Entities.Users
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
         public string Document { get; set; } = string.Empty;
-        public ICollection<UserAddress> Address { get; set; } = new List<UserAddress>();
-        public ICollection<UserContact> Contact { get; set; } = new List<UserContact>();
-        public ICollection<Sale> Sale { get; set; } = new List<Sale>();
+        public virtual UserAddress Address { get; set; }
+        public virtual UserContact Contact { get; set; }
+        public virtual ICollection<Sale> Sale { get; set; }
+
+        public User()
+        {
+            Sale = new HashSet<Sale>();
+        }
     }
 }

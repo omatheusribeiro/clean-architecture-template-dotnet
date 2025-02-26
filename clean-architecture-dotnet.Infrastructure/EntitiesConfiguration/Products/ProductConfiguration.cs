@@ -23,15 +23,16 @@ namespace clean_architecture_dotnet.Infrastructure.EntitiesConfiguration.Product
             builder.Property(p => p.ProductTypeId).IsRequired();
 
             builder
-                .HasOne(uc => uc.Type)
+                .HasOne(u => u.Type)
                 .WithMany(u => u.Product)
-                .HasForeignKey(uc => uc.ProductTypeId);
+                .HasForeignKey(uc => uc.ProductTypeId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder
                 .HasMany(u => u.Sale)
                 .WithOne(a => a.Product)
                 .HasForeignKey(a => a.ProductId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasData(
                 new Product
@@ -43,7 +44,7 @@ namespace clean_architecture_dotnet.Infrastructure.EntitiesConfiguration.Product
                     Description = "Description for product test",
                     Value = 100,
                     ProductTypeId = 1,
-                }); ;
+                });
         }
     }
 }

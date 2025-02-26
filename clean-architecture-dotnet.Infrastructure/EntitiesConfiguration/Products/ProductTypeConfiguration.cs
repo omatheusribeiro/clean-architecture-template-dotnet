@@ -22,7 +22,7 @@ namespace clean_architecture_dotnet.Infrastructure.EntitiesConfiguration.Product
                 .HasMany(u => u.Product)
                 .WithOne(c => c.Type)
                 .HasForeignKey(c => c.ProductTypeId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasData(
                 new ProductType
@@ -32,7 +32,7 @@ namespace clean_architecture_dotnet.Infrastructure.EntitiesConfiguration.Product
                     ChangeDate = null,
                     Name = "Product type test",
                     Description = "Description for product type test",
-                }); ;
+                });
         }
     }
 }

@@ -9,7 +9,7 @@ namespace clean_architecture_dotnet.Domain.Entities.Sales
         public decimal TotalValue { get; set; }
         public int UserId { get; set; }
         public int ProductId { get; set; }
-        public Product Product { get; set; } = new Product();
-        public User User { get; set; } = new User();
+        public virtual Product Product { get; set; }
+        public virtual User User { get; set; }
     }
 }

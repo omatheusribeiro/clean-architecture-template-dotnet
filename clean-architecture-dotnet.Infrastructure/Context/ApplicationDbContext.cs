@@ -43,11 +43,11 @@ namespace clean_architecture_dotnet.Infrastructure.Context
 
             #region Users Configuration
 
-            builder.ApplyConfiguration(new UserConfiguration());
-
             builder.ApplyConfiguration(new UserAddressConfiguration());
 
             builder.ApplyConfiguration(new UserContactConfiguration());
+
+            builder.ApplyConfiguration(new UserConfiguration());
 
             #endregion
 

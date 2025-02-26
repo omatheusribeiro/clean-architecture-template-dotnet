@@ -21,22 +21,22 @@ namespace clean_architecture_dotnet.Infrastructure.EntitiesConfiguration.Users
             builder.Property(p => p.Document).IsRequired();
 
             builder
-               .HasMany(u => u.Contact)
-               .WithOne(c => c.User)
-               .HasForeignKey(c => c.UserId)
-               .OnDelete(DeleteBehavior.Cascade);
+               .HasOne(u => u.Contact)
+               .WithMany(c => c.User)
+               .HasForeignKey(c => c.Id)
+               .OnDelete(DeleteBehavior.Restrict);
 
             builder
-                .HasMany(u => u.Address)
-                .WithOne(a => a.User)
-                .HasForeignKey(a => a.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .HasOne(u => u.Address)
+                .WithMany(a => a.User)
+                .HasForeignKey(a => a.Id)
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder
                 .HasMany(u => u.Sale)
                 .WithOne(a => a.User)
                 .HasForeignKey(a => a.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasData(
                 new User
@@ -47,7 +47,7 @@ namespace clean_architecture_dotnet.Infrastructure.EntitiesConfiguration.Users
                     FirstName = "User",
                     LastName = "Test",
                     Document = "00.000.000/0000-00",
-                }); ;
+                });
         }
     }
 }

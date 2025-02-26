@@ -31,9 +31,10 @@ namespace clean_architecture_dotnet.Infrastructure.EntitiesConfiguration.Users
             builder.Property(p => p.UserId).IsRequired();
 
             builder
-               .HasOne(ua => ua.User)
-               .WithMany(u => u.Address)
-               .HasForeignKey(ua => ua.UserId);
+               .HasMany(ua => ua.User)
+               .WithOne(u => u.Address)
+               .HasForeignKey(ua => ua.Id)
+               .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasData(
                 new UserAddress
@@ -49,7 +50,7 @@ namespace clean_architecture_dotnet.Infrastructure.EntitiesConfiguration.Users
                     Country = "Country test",
                     ZipCode = "00000-000",
                     UserId = 1,
-                }); ;
+                });
         }
     }
 }

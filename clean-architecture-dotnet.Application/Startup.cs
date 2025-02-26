@@ -13,7 +13,7 @@ namespace clean_architecture_dotnet.Application
 {
     public static class Startup
     {
-        public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
             #region Users Services
 

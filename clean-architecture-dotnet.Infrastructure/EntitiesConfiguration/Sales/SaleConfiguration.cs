@@ -23,12 +23,14 @@ namespace clean_architecture_dotnet.Infrastructure.EntitiesConfiguration.Sales
             builder
                 .HasOne(uc => uc.User)
                 .WithMany(u => u.Sale)
-                .HasForeignKey(uc => uc.UserId);
+                .HasForeignKey(uc => uc.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder
                 .HasOne(uc => uc.Product)
                 .WithMany(u => u.Sale)
-                .HasForeignKey(uc => uc.ProductId);
+                .HasForeignKey(uc => uc.ProductId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasData(
                 new Sale

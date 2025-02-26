@@ -2,6 +2,8 @@
 using clean_architecture_dotnet.Api.Middlewares;
 using clean_architecture_dotnet.Authentication.Validators;
 using clean_architecture_dotnet.Infrastructure.Authentication;
+using clean_architecture_dotnet.Infrastructure.Context;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -55,6 +57,9 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSettings"));
 builder.Services.AddTransient<TokenValidation>();
 
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")).EnableSensitiveDataLogging());
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -63,6 +68,16 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+
+    dbContext.Database.EnsureCreated();
+
+    dbContext.Database.Migrate();
+}
+
 
 app.UseMiddleware<TokenMiddleware>();
 

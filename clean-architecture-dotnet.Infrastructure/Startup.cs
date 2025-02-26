@@ -17,8 +17,8 @@ namespace clean_architecture_dotnet.Infrastructure
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    configuration.GetConnectionString("SQL-Connection")));
+                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"))
+                      .EnableSensitiveDataLogging());
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 
