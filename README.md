@@ -61,6 +61,12 @@ clean-architecture-dotnet.Infrastructure
  │   │   ├── Interfaces # Repository interfaces
  │   ├── Users         # User repository implementations
  │   │   ├── Interfaces # Repository interfaces
+
+clean-architecture-dotnet.Tests
+ ├── Application       # Application layer testing
+ │   ├── Products      # Product tests implementations
+ │   ├── Sales         # Sales tests implementations
+ │   ├── Users         # User tests implementations
 ```
 
 ## 🎼 Screenshots
