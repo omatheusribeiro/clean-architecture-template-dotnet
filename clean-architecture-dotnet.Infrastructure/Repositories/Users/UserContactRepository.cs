@@ -21,7 +21,7 @@ namespace clean_architecture_dotnet.Infrastructure.Repositories.Users
 
         public async Task<UserContact> GetById(int id)
         {
-            return await _context.UserContacts.AsNoTracking().Where(u => u.Id == id).FirstAsync();
+            return await _context.UserContacts.AsNoTracking().Where(u => u.Id == id).FirstOrDefaultAsync();
         }
 
         public async Task<UserContact> GetByEmail(string email)

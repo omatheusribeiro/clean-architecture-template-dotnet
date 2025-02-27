@@ -22,12 +22,12 @@ namespace clean_architecture_dotnet.Application.Services.Login
             try
             {
                 if (string.IsNullOrEmpty(email))
-                    return Result<string>.Fail("Unable to identify email in the database.", (int)HttpStatus.NotFound);
+                    return Result<string>.Fail("Unable to identify email in the database.", (int)HttpStatus.BadRequest);
 
                 var result = await _userContactRepository.GetByEmail(email);
 
                 if (result is null)
-                    return Result<string>.Fail("Unable to identify email in the database.", (int)HttpStatus.NotFound);
+                    return Result<string>.Fail("Unable to identify email in the database.", (int)HttpStatus.BadRequest);
 
                 var token = _tokenGenerator.GenerateToken(result.Email);
 
@@ -36,7 +36,7 @@ namespace clean_architecture_dotnet.Application.Services.Login
             }
             catch (Exception ex)
             {
-                return Result<string>.Fail("There was an error generating the token: " + ex.Message, (int)HttpStatus.BadRequest);
+                return Result<string>.Fail("There was an error generating the token: " + ex.Message);
             }
 
         }

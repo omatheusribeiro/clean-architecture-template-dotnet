@@ -1,6 +1,8 @@
 ﻿using clean_architecture_dotnet.Api.Config.MappingConfig;
 using clean_architecture_dotnet.Api.Middlewares;
+using clean_architecture_dotnet.Application;
 using clean_architecture_dotnet.Authentication.Validators;
+using clean_architecture_dotnet.Infrastructure;
 using clean_architecture_dotnet.Infrastructure.Authentication;
 using clean_architecture_dotnet.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
@@ -19,7 +21,7 @@ builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo
     {
-        Title = "API with clean architecture",
+        Title = "Clean Architecture Template for .Net Core 8",
         Version = "v1",
         Description = "API example for demonstration using clean architecture"
     });
@@ -57,8 +59,8 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSettings"));
 builder.Services.AddTransient<TokenValidation>();
 
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")).EnableSensitiveDataLogging());
+builder.Services.AddApplicationServices();
+builder.Services.AddInfrastructure(builder.Configuration);
 
 var app = builder.Build();
 

@@ -23,6 +23,11 @@ namespace clean_architecture_dotnet.Application.Services.Products
         {
             try
             {
+                var type = await _productTypeRepository.GetById(productType.Id);
+
+                if (type is null)
+                    return Result<ProductTypeViewModel>.Fail("product type not found.", (int)HttpStatus.BadRequest);
+
                 var mapProductType = _mapper.Map<ProductType>(productType);
 
                 var result = await _productTypeRepository.Put(mapProductType);
@@ -33,7 +38,7 @@ namespace clean_architecture_dotnet.Application.Services.Products
             }
             catch (Exception ex)
             {
-                return Result<ProductTypeViewModel>.Fail("There was an error editing the product type: " + ex.Message, (int)HttpStatus.BadRequest);
+                return Result<ProductTypeViewModel>.Fail("There was an error editing the product type: " + ex.Message);
             }
         }
 
@@ -52,7 +57,7 @@ namespace clean_architecture_dotnet.Application.Services.Products
             }
             catch (Exception ex)
             {
-                return Result<ProductTypeViewModel>.Fail("There was an error registering the product type: " + ex.Message, (int)HttpStatus.BadRequest);
+                return Result<ProductTypeViewModel>.Fail("There was an error registering the product type: " + ex.Message);
             }
         }
     }

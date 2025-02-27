@@ -21,7 +21,7 @@ namespace clean_architecture_dotnet.Infrastructure.Repositories.Users
 
         public async Task<User> GetById(int id)
         {
-            return await _context.Users.AsNoTracking().Include(a => a.Address).Include(c => c.Contact).Where(u => u.Id == id).FirstAsync();
+            return await _context.Users.AsNoTracking().Include(a => a.Address).Include(c => c.Contact).Where(u => u.Id == id).FirstOrDefaultAsync();
         }
 
         public async Task<User> Put(User user)

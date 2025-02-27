@@ -23,9 +23,6 @@ namespace clean_architecture_dotnet.Api.Controllers.V1.Products
         {
             var response = await _productService.GetAll();
 
-            if (response.StatusCode == (int)HttpStatus.NotFound)
-                return NotFound(response);
-
             if (response.StatusCode == (int)HttpStatus.BadRequest)
                 return BadRequest(response);
 
@@ -38,9 +35,6 @@ namespace clean_architecture_dotnet.Api.Controllers.V1.Products
         public async Task<IActionResult> GetById(int id)
         {
             var response = await _productService.GetById(id);
-
-            if (response.StatusCode == (int)HttpStatus.NotFound)
-                return NotFound(response);
 
             if (response.StatusCode == (int)HttpStatus.BadRequest)
                 return BadRequest(response);
@@ -55,9 +49,6 @@ namespace clean_architecture_dotnet.Api.Controllers.V1.Products
         {
             var response = await _productService.Put(product);
 
-            if (response.StatusCode == (int)HttpStatus.NotFound)
-                return NotFound(response);
-
             if (response.StatusCode == (int)HttpStatus.BadRequest)
                 return BadRequest(response);
 
@@ -70,9 +61,6 @@ namespace clean_architecture_dotnet.Api.Controllers.V1.Products
         {
             var response = await _productService.Post(product);
 
-            if (response.StatusCode == (int)HttpStatus.NotFound)
-                return NotFound(response);
-
             if (response.StatusCode == (int)HttpStatus.BadRequest)
                 return BadRequest(response);
 
@@ -84,9 +72,6 @@ namespace clean_architecture_dotnet.Api.Controllers.V1.Products
         public async Task<ActionResult<ProductViewModel>> Delete([FromBody] ProductViewModel product)
         {
             var response = await _productService.Delete(product);
-
-            if (response.StatusCode == (int)HttpStatus.NotFound)
-                return NotFound(response);
 
             if (response.StatusCode == (int)HttpStatus.BadRequest)
                 return BadRequest(response);

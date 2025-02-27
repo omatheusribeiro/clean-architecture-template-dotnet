@@ -21,7 +21,7 @@ namespace clean_architecture_dotnet.Infrastructure.Repositories.Products
 
         public async Task<ProductType> GetById(int id)
         {
-            return await _context.ProductTypes.AsNoTracking().Where(u => u.Id == id).FirstAsync();
+            return await _context.ProductTypes.AsNoTracking().Where(u => u.Id == id).FirstOrDefaultAsync();
         }
 
         public async Task<ProductType> Put(ProductType productType)

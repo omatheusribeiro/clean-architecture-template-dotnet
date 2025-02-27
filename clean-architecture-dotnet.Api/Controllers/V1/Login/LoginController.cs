@@ -22,9 +22,6 @@ namespace clean_architecture_dotnet.Api.Controllers.V1.Login
         {
             var response = await _loginService.GetLogin(email);
 
-            if(response.StatusCode == (int)HttpStatus.NotFound)
-                return NotFound(response);
-
             if (response.StatusCode == (int)HttpStatus.BadRequest)
                 return BadRequest(response);
 

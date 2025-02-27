@@ -23,9 +23,6 @@ namespace clean_architecture_dotnet.Api.Controllers.V1.Users
         {
             var response = await _userService.GetAll();
 
-            if (response.StatusCode == (int)HttpStatus.NotFound)
-                return NotFound(response);
-
             if (response.StatusCode == (int)HttpStatus.BadRequest)
                 return BadRequest(response);
 
@@ -38,9 +35,6 @@ namespace clean_architecture_dotnet.Api.Controllers.V1.Users
         public async Task<IActionResult> GetById(int id)
         {
             var response = await _userService.GetById(id);
-
-            if (response.StatusCode == (int)HttpStatus.NotFound)
-                return NotFound(response);
 
             if (response.StatusCode == (int)HttpStatus.BadRequest)
                 return BadRequest(response);
@@ -55,9 +49,6 @@ namespace clean_architecture_dotnet.Api.Controllers.V1.Users
         {
             var response = await _userService.Put(user);
 
-            if (response.StatusCode == (int)HttpStatus.NotFound)
-                return NotFound(response);
-
             if (response.StatusCode == (int)HttpStatus.BadRequest)
                 return BadRequest(response);
 
@@ -70,9 +61,6 @@ namespace clean_architecture_dotnet.Api.Controllers.V1.Users
         {
             var response = await _userService.Post(user);
 
-            if (response.StatusCode == (int)HttpStatus.NotFound)
-                return NotFound(response);
-
             if (response.StatusCode == (int)HttpStatus.BadRequest)
                 return BadRequest(response);
 
@@ -84,9 +72,6 @@ namespace clean_architecture_dotnet.Api.Controllers.V1.Users
         public async Task<ActionResult<UserViewModel>> Delete([FromBody] UserViewModel user)
         {
             var response = await _userService.Delete(user);
-
-            if (response.StatusCode == (int)HttpStatus.NotFound)
-                return NotFound(response);
 
             if (response.StatusCode == (int)HttpStatus.BadRequest)
                 return BadRequest(response);

@@ -10,7 +10,7 @@
         public static Result<T> Ok(T data, string message = "Success") =>
             new Result<T> { Success = true, Data = data, Message = message, StatusCode = 200 };
 
-        public static Result<T> Fail(string message, int statusCode) =>
+        public static Result<T> Fail(string message, int statusCode = 500) =>
             new Result<T> { Success = false, Message = message, StatusCode = statusCode };
     }
 

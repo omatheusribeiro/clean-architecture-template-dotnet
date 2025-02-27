@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using clean_architecture_dotnet.Application.Models.Http;
 using clean_architecture_dotnet.Application.Services.Users.Interfaces;
+using clean_architecture_dotnet.Application.ViewModels.Sales;
 using clean_architecture_dotnet.Application.ViewModels.Users;
+using clean_architecture_dotnet.Domain.Entities.Sales;
 using clean_architecture_dotnet.Domain.Entities.Users;
 using clean_architecture_dotnet.Domain.Enums;
 using clean_architecture_dotnet.Infrastructure.Repositories.Users.Interfaces;
@@ -23,6 +25,11 @@ namespace clean_architecture_dotnet.Application.Services.Users
         {
             try
             {
+                var userAddress = await _userAddressRepository.GetById(address.Id);
+
+                if (userAddress is null)
+                    return Result<UserAddressViewModel>.Fail("address not found.", (int)HttpStatus.BadRequest);
+
                 var mapAddress = _mapper.Map<UserAddress>(address);
 
                 var result = await _userAddressRepository.Put(mapAddress);

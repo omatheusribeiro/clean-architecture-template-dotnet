@@ -5,7 +5,6 @@ namespace clean_architecture_dotnet.Application.ViewModels.Users
 {
     public class UserContactViewModel
     {
-        [DisplayName("Id")]
         public int Id { get; set; }
 
         [Required(ErrorMessage = "It is necessary to enter the contact email.")]

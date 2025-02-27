@@ -23,9 +23,6 @@ namespace clean_architecture_dotnet.Api.Controllers.V1.Users
         {
             var response = await _userContactService.Put(contact);
 
-            if (response.StatusCode == (int)HttpStatus.NotFound)
-                return NotFound(response);
-
             if (response.StatusCode == (int)HttpStatus.BadRequest)
                 return BadRequest(response);
 

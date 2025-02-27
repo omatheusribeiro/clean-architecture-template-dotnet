@@ -23,9 +23,6 @@ namespace clean_architecture_dotnet.Api.Controllers.V1.Sales
         {
             var response = await _saleService.GetAll();
 
-            if (response.StatusCode == (int)HttpStatus.NotFound)
-                return NotFound(response);
-
             if (response.StatusCode == (int)HttpStatus.BadRequest)
                 return BadRequest(response);
 
@@ -38,9 +35,6 @@ namespace clean_architecture_dotnet.Api.Controllers.V1.Sales
         public async Task<IActionResult> GetById(int id)
         {
             var response = await _saleService.GetById(id);
-
-            if (response.StatusCode == (int)HttpStatus.NotFound)
-                return NotFound(response);
 
             if (response.StatusCode == (int)HttpStatus.BadRequest)
                 return BadRequest(response);
@@ -55,9 +49,6 @@ namespace clean_architecture_dotnet.Api.Controllers.V1.Sales
         {
             var response = await _saleService.Put(sale);
 
-            if (response.StatusCode == (int)HttpStatus.NotFound)
-                return NotFound(response);
-
             if (response.StatusCode == (int)HttpStatus.BadRequest)
                 return BadRequest(response);
 
@@ -70,9 +61,6 @@ namespace clean_architecture_dotnet.Api.Controllers.V1.Sales
         {
             var response = await _saleService.Post(sale);
 
-            if (response.StatusCode == (int)HttpStatus.NotFound)
-                return NotFound(response);
-
             if (response.StatusCode == (int)HttpStatus.BadRequest)
                 return BadRequest(response);
 
@@ -84,9 +72,6 @@ namespace clean_architecture_dotnet.Api.Controllers.V1.Sales
         public async Task<ActionResult<SaleViewModel>> Delete([FromBody] SaleViewModel sale)
         {
             var response = await _saleService.Delete(sale);
-
-            if (response.StatusCode == (int)HttpStatus.NotFound)
-                return NotFound(response);
 
             if (response.StatusCode == (int)HttpStatus.BadRequest)
                 return BadRequest(response);

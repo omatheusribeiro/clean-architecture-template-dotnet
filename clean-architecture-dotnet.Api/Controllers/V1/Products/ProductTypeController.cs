@@ -23,9 +23,6 @@ namespace clean_architecture_dotnet.Api.Controllers.V1.Products
         {
             var response = await _productTypeService.Put(type);
 
-            if (response.StatusCode == (int)HttpStatus.NotFound)
-                return NotFound(response);
-
             if (response.StatusCode == (int)HttpStatus.BadRequest)
                 return BadRequest(response);
 
@@ -37,9 +34,6 @@ namespace clean_architecture_dotnet.Api.Controllers.V1.Products
         public async Task<ActionResult<ProductTypeViewModel>> Post([FromBody] ProductTypeViewModel type)
         {
             var response = await _productTypeService.Post(type);
-
-            if (response.StatusCode == (int)HttpStatus.NotFound)
-                return NotFound(response);
 
             if (response.StatusCode == (int)HttpStatus.BadRequest)
                 return BadRequest(response);
