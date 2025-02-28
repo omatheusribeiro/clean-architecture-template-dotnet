@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel;
+using System.Text.Json.Serialization;
 
 namespace clean_architecture_dotnet.Application.ViewModels.Users
 {
@@ -8,27 +8,22 @@ namespace clean_architecture_dotnet.Application.ViewModels.Users
         public int Id { get; set; }
 
         [Required(ErrorMessage = "It is necessary to enter the user first name.")]
-        [MinLength(2)]
-        [MaxLength(100)]
-        [DisplayName("FirstName")]
+        [JsonPropertyName("firstName")]
         public string FirstName { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "It is necessary to enter the user second name.")]
-        [MinLength(2)]
-        [MaxLength(100)]
-        [DisplayName("LastName")]
+        [JsonPropertyName("lastName")]
         public string LastName { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "It is necessary to provide the user document.")]
-        [MinLength(11)]
-        [MaxLength(18)]
-        [DisplayName("Document")]
+        [JsonPropertyName("document")]
         public string Document { get; set; } = string.Empty;
 
-        [DisplayName("Address")]
+        [JsonPropertyName("address")]
         public UserAddressViewModel Address { get; set; } = new UserAddressViewModel();
 
-        [DisplayName("Contact")]
+
+        [JsonPropertyName("contact")]
         public UserContactViewModel Contact { get; set; } = new UserContactViewModel();
     }
 }

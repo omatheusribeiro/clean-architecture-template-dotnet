@@ -79,6 +79,12 @@ namespace clean_architecture_dotnet.Application.Services.Users
                 if (user is null)
                     return Result<UserViewModel>.Fail("There is missing information to perform user change.", (int)HttpStatus.BadRequest);
 
+                if (user.Address is null)
+                    return Result<UserViewModel>.Fail("Address not found.", (int)HttpStatus.BadRequest);
+
+                if (user.Contact is null)
+                    return Result<UserViewModel>.Fail("Contact not found.", (int)HttpStatus.BadRequest);
+
                 var userEntity = await _userRepository.GetById(user.Id);
 
                 if (userEntity is null)
@@ -89,32 +95,6 @@ namespace clean_architecture_dotnet.Application.Services.Users
                 var resultUser = await _userRepository.Put(mapUser);
 
                 mapUserModel = _mapper.Map<UserViewModel>(resultUser);
-
-                if (user.Address is not null)
-                {
-                    var addressEntity = await _userAddressRepository.GetById(user.Address.Id);
-
-                    if (addressEntity is null)
-                        return Result<UserViewModel>.Fail("Address not found.", (int)HttpStatus.BadRequest);
-
-                    var mapAddress = _mapper.Map<UserAddress>(user.Address);
-                    var resultAddress = await _userAddressRepository.Put(mapAddress);
-                    mapAddressModel = _mapper.Map<UserAddressViewModel>(resultAddress);
-                    mapUserModel.Address = mapAddressModel;
-                }
-
-                if (user.Contact is not null)
-                {
-                    var contactEntity = await _userContactRepository.GetById(user.Contact.Id);
-
-                    if (contactEntity is null)
-                        return Result<UserViewModel>.Fail("Contact not found.", (int)HttpStatus.BadRequest);
-
-                    var mapContact = _mapper.Map<UserContact>(user.Contact);
-                    var resultContact = await _userContactRepository.Put(mapContact);
-                    mapContactModel = _mapper.Map<UserContactViewModel>(resultContact);
-                    mapUserModel.Contact = mapContactModel;
-                }
 
                 return Result<UserViewModel>.Ok(mapUserModel);
             }
@@ -151,11 +131,6 @@ namespace clean_architecture_dotnet.Application.Services.Users
                 var resultContact = await _userContactRepository.Post(mapContact);
 
                 var mapUserModel = _mapper.Map<UserViewModel>(resultUser);
-                var mapAddressModel = _mapper.Map<UserAddressViewModel>(resultAddress);
-                var mapContactModel = _mapper.Map<UserContactViewModel>(resultContact);
-
-                mapUserModel.Address = mapAddressModel;
-                mapUserModel.Contact = mapContactModel;
 
                 return Result<UserViewModel>.Ok(mapUserModel);
             }
@@ -193,12 +168,8 @@ namespace clean_architecture_dotnet.Application.Services.Users
                     return Result<UserViewModel>.Fail("Contact not found.", (int)HttpStatus.BadRequest);
 
                 var mapUser = _mapper.Map<User>(user);
-                var mapAddress = _mapper.Map<UserAddress>(user.Address);
-                var mapContact = _mapper.Map<UserContact>(user.Contact);
 
                 var resultUser = await _userRepository.Delete(mapUser);
-                var resultAddress = await _userAddressRepository.Delete(mapAddress);
-                var resultContact = await _userContactRepository.Delete(mapContact);
 
                 var mapUserModel = _mapper.Map<UserViewModel>(resultUser);
 

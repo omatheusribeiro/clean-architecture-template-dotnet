@@ -1,57 +1,42 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel;
+using System.Text.Json.Serialization;
 
 namespace clean_architecture_dotnet.Application.ViewModels.Users
 {
     public class UserAddressViewModel
     {
+        [JsonPropertyName("id")]
         public int Id { get; set; }
 
         [Required(ErrorMessage = "It is necessary to enter the address street.")]
-        [MinLength(10)]
-        [MaxLength(100)]
-        [DisplayName("Street")]
+        [JsonPropertyName("street")]
         public string Street { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "It is necessary to enter the address number.")]
-        [MinLength(1)]
-        [MaxLength(5)]
-        [DisplayName("Number")]
+        [JsonPropertyName("number")]
         public int Number { get; set; }
 
-        [MinLength(1)]
-        [MaxLength(50)]
-        [DisplayName("Complement")]
+        [JsonPropertyName("complement")]
         public string Complement { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "It is necessary to provide the address neighborhood.")]
-        [MinLength(5)]
-        [MaxLength(100)]
-        [DisplayName("Neighborhood")]
+        [JsonPropertyName("neighborhood")]
         public string Neighborhood { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "It is necessary to provide the address city.")]
-        [MinLength(5)]
-        [MaxLength(100)]
-        [DisplayName("City")]
+        [JsonPropertyName("city")]
         public string City { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "It is necessary to provide the address state.")]
-        [MinLength(5)]
-        [MaxLength(100)]
-        [DisplayName("State")]
+        [JsonPropertyName("state")]
         public string State { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "It is necessary to provide the address country.")]
-        [MinLength(5)]
-        [MaxLength(100)]
-        [DisplayName("Country")]
+        [JsonPropertyName("country")]
         public string Country { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "It is necessary to provide the address zip code.")]
-        [MinLength(8)]
-        [MaxLength(9)]
-        [DisplayName("ZipCode")]
+        [JsonPropertyName("zipCode")]
         public string ZipCode { get; set; } = string.Empty;
     }
 }

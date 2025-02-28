@@ -1,22 +1,20 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel;
+using System.Text.Json.Serialization;
 
 namespace clean_architecture_dotnet.Application.ViewModels.Users
 {
     public class UserContactViewModel
     {
+
+        [JsonPropertyName("id")]
         public int Id { get; set; }
 
         [Required(ErrorMessage = "It is necessary to enter the contact email.")]
-        [MinLength(5)]
-        [MaxLength(20)]
-        [DisplayName("Email")]
+        [JsonPropertyName("email")]
         public string Email { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "It is necessary to enter the contact phone number.")]
-        [MinLength(8)]
-        [MaxLength(15)]
-        [DisplayName("PhoneNumber")]
+        [JsonPropertyName("phoneNumber")]
         public string PhoneNumber { get; set; } = string.Empty;
     }
 }
