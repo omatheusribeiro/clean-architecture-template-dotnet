@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel;
 using System.Text.Json.Serialization;
 
 namespace clean_architecture_dotnet.Application.ViewModels.Sales
