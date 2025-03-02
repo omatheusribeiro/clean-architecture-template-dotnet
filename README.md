@@ -9,7 +9,7 @@ This repository demonstrates:
 👉 **Implementation of Code First with Migrations** 🛂  
 👉 **Usage of Repository Pattern and Unit of Work** 🔄  
 👉 **Automated Testing with xUnit** 🧪  
-👉 **Authentication and Authorization with JWT** 🔑  
+👉 **Authentication and Authorization with JWT** 🔑   
 
 ## 🏰 Project Structure
 ```
