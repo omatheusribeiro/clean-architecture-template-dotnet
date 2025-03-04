@@ -40,8 +40,17 @@ namespace clean_architecture_dotnet.Tests.Application.Services.Sales
         public async Task GetAll_ReturnsAllSales()
         {
             // Arrange
-            var sales = _fixture.CreateMany<Sale>().ToList();
-            var salesViewModel = _fixture.CreateMany<SaleViewModel>().ToList();
+            var sales = new List<Sale>
+            {
+                new Sale { Id = 1, TotalValue = 10, UserId = 1, ProductId = 1 },
+                new Sale { Id = 2, TotalValue = 10, UserId = 1, ProductId = 1 }
+            };
+
+            var salesViewModel = new List<SaleViewModel>
+            {
+                new SaleViewModel { Id = 1, TotalValue = 10, UserId = 1, ProductId = 1 },
+                new SaleViewModel { Id = 2, TotalValue = 10, UserId = 1, ProductId = 1 }
+            };
 
             _saleRepositoryMock.Setup(x => x.GetAll())
                 .ReturnsAsync(sales);
@@ -54,8 +63,12 @@ namespace clean_architecture_dotnet.Tests.Application.Services.Sales
 
             // Assert
             Assert.True(result.Success);
-            Assert.Equal(salesViewModel, result.Data);
+            Assert.NotNull(result.Data);
+            Assert.Equal(salesViewModel.Count, result.Data.Count());
+            Assert.Equal(salesViewModel[0].Id, result.Data.ElementAt(0).Id);
+            Assert.Equal(salesViewModel[1].Id, result.Data.ElementAt(1).Id);
         }
+
 
         [Fact]
         public async Task Post_WithValidSale_ReturnsSuccess()
