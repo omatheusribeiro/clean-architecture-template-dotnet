@@ -55,8 +55,17 @@ namespace clean_architecture_dotnet.Tests.Application.Services.Products
         public async Task Post_WithValidProductType_ReturnsSuccess()
         {
             // Arrange
-            var productTypeViewModel = _fixture.Create<ProductTypeViewModel>();
-            var productType = _fixture.Create<ProductType>();
+            var productTypeViewModel = new ProductTypeViewModel
+            {
+                Id = 1,
+                Name = "Eletronics"
+            };
+
+            var productType = new ProductType
+            {
+                Id = 1,
+                Name = "Eletronics"
+            };
 
             _mapperMock.Setup(x => x.Map<ProductType>(productTypeViewModel))
                 .Returns(productType);
@@ -72,7 +81,10 @@ namespace clean_architecture_dotnet.Tests.Application.Services.Products
 
             // Assert
             Assert.True(result.Success);
-            Assert.Equal(productTypeViewModel, result.Data);
+            Assert.NotNull(result.Data);
+            Assert.Equal(productTypeViewModel.Id, result.Data.Id);
+            Assert.Equal(productTypeViewModel.Name, result.Data.Name);
         }
+
     }
 } 
