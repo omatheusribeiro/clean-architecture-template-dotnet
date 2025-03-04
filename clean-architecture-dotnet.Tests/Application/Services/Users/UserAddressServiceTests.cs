@@ -115,8 +115,31 @@ namespace clean_architecture_dotnet.Tests.Application.Services.Users
         public async Task Put_VerifyMappingCalls()
         {
             // Arrange
-            var addressViewModel = _fixture.Create<UserAddressViewModel>();
-            var address = _fixture.Create<UserAddress>();
+            var addressViewModel = new UserAddressViewModel
+            {
+                Id = 1,
+                Street = "Rua das Flores",
+                Number = 123,
+                Complement = "",
+                Neighborhood = "Test",
+                City = "São Paulo",
+                State = "SP",
+                Country = "Brazil",
+                ZipCode = "01000-000"
+            };
+
+            var address = new UserAddress
+            {
+                Id = 1,
+                Street = "Rua das Flores",
+                Number = 123,
+                Complement = "",
+                Neighborhood = "Test",
+                City = "São Paulo",
+                State = "SP",
+                Country = "Brazil",
+                ZipCode = "01000-000"
+            };
 
             _userAddressRepositoryMock.Setup(x => x.GetById(addressViewModel.Id))
                 .ReturnsAsync(address);
@@ -137,5 +160,6 @@ namespace clean_architecture_dotnet.Tests.Application.Services.Users
             _mapperMock.Verify(x => x.Map<UserAddress>(addressViewModel), Times.Once);
             _mapperMock.Verify(x => x.Map<UserAddressViewModel>(address), Times.Once);
         }
+
     }
 } 
