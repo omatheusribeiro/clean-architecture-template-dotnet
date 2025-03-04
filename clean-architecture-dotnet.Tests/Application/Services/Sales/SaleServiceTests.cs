@@ -74,10 +74,35 @@ namespace clean_architecture_dotnet.Tests.Application.Services.Sales
         public async Task Post_WithValidSale_ReturnsSuccess()
         {
             // Arrange
-            var saleViewModel = _fixture.Create<SaleViewModel>();
-            var sale = _fixture.Create<Sale>();
-            var product = _fixture.Create<Product>();
-            var user = _fixture.Create<User>();
+            var saleViewModel = new SaleViewModel
+            {
+                Id = 1,
+                ProductId = 10,
+                UserId = 5,
+                TotalValue = 150
+            };
+
+            var sale = new Sale
+            {
+                Id = 1,
+                ProductId = 10,
+                UserId = 5,
+                TotalValue = 150
+            };
+
+            var product = new Product
+            {
+                Id = 10,
+                Name = "Smartphone",
+                Value = 1500,
+                ProductTypeId = 1
+            };
+
+            var user = new User
+            {
+                Id = 5,
+                FirstName = "João Silva"
+            };
 
             _productRepositoryMock.Setup(x => x.GetById(saleViewModel.ProductId))
                 .ReturnsAsync(product);
@@ -99,7 +124,12 @@ namespace clean_architecture_dotnet.Tests.Application.Services.Sales
 
             // Assert
             Assert.True(result.Success);
-            Assert.Equal(saleViewModel, result.Data);
+            Assert.NotNull(result.Data);
+            Assert.Equal(saleViewModel.Id, result.Data.Id);
+            Assert.Equal(saleViewModel.ProductId, result.Data.ProductId);
+            Assert.Equal(saleViewModel.UserId, result.Data.UserId);
+            Assert.Equal(saleViewModel.TotalValue, result.Data.TotalValue);
         }
+
     }
 } 
