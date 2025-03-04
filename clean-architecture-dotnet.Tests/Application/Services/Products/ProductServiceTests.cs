@@ -134,9 +134,25 @@ namespace clean_architecture_dotnet.Tests.Application.Services.Products
         public async Task Put_WithValidProduct_ReturnsSuccess()
         {
             // Arrange
-            var productViewModel = _fixture.Create<ProductViewModel>();
-            var product = _fixture.Create<Product>();
-            var productType = _fixture.Create<ProductType>();
+            var productViewModel = new ProductViewModel
+            {
+                Id = 1,
+                Name = "Smartphone",
+                ProductTypeId = 1
+            };
+
+            var productType = new ProductType
+            {
+                Id = 1,
+                Name = "Eletronics"
+            };
+
+            var product = new Product
+            {
+                Id = 1,
+                Name = "Smartphone",
+                ProductTypeId = productType.Id
+            };
 
             _productTypeRepositoryMock.Setup(x => x.GetById(productViewModel.ProductTypeId))
                 .ReturnsAsync(productType);
@@ -155,8 +171,12 @@ namespace clean_architecture_dotnet.Tests.Application.Services.Products
 
             // Assert
             Assert.True(result.Success);
-            Assert.Equal(productViewModel, result.Data);
+            Assert.NotNull(result.Data);
+            Assert.Equal(productViewModel.Id, result.Data.Id);
+            Assert.Equal(productViewModel.Name, result.Data.Name);
+            Assert.Equal(productViewModel.ProductTypeId, result.Data.ProductTypeId);
         }
+
 
         [Fact]
         public async Task Put_WithInvalidProductType_ReturnsFail()
@@ -179,9 +199,25 @@ namespace clean_architecture_dotnet.Tests.Application.Services.Products
         public async Task Post_WithValidProduct_ReturnsSuccess()
         {
             // Arrange
-            var productViewModel = _fixture.Create<ProductViewModel>();
-            var product = _fixture.Create<Product>();
-            var productType = _fixture.Create<ProductType>();
+            var productViewModel = new ProductViewModel
+            {
+                Id = 1,
+                Name = "Smartphone",
+                ProductTypeId = 1
+            };
+
+            var productType = new ProductType
+            {
+                Id = 1,
+                Name = "Eletronics"
+            };
+
+            var product = new Product
+            {
+                Id = 1,
+                Name = "Smartphone",
+                ProductTypeId = productType.Id,
+            };
 
             _productTypeRepositoryMock.Setup(x => x.GetById(productViewModel.ProductTypeId))
                 .ReturnsAsync(productType);
@@ -200,8 +236,12 @@ namespace clean_architecture_dotnet.Tests.Application.Services.Products
 
             // Assert
             Assert.True(result.Success);
-            Assert.Equal(productViewModel, result.Data);
+            Assert.NotNull(result.Data);
+            Assert.Equal(productViewModel.Id, result.Data.Id);
+            Assert.Equal(productViewModel.Name, result.Data.Name);
+            Assert.Equal(productViewModel.ProductTypeId, result.Data.ProductTypeId);
         }
+
 
         [Fact]
         public async Task Post_WithInvalidProductType_ReturnsFail()
