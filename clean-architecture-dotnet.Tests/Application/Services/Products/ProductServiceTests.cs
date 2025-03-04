@@ -199,9 +199,12 @@ namespace clean_architecture_dotnet.Tests.Application.Services.Products
         public async Task Delete_WithValidProduct_ReturnsSuccess()
         {
             // Arrange
-            var productViewModel = _fixture.Create<ProductViewModel>();
-            var product = _fixture.Create<Product>();
-            var productType = _fixture.Create<ProductType>();
+            var productType = new ProductType { Id = 1, Name = "Electronics" };
+            var product = new Product { Id = 1, Name = "Smartphone", ProductTypeId = productType.Id };
+            var productViewModel = new ProductViewModel { ProductTypeId = productType.Id, Name = "Smartphone" };
+
+            productType.Product = new List<Product> { product };
+
 
             _productTypeRepositoryMock.Setup(x => x.GetById(productViewModel.ProductTypeId))
                 .ReturnsAsync(productType);
