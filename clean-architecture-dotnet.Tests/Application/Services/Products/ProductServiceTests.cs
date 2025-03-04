@@ -33,8 +33,17 @@ namespace clean_architecture_dotnet.Tests.Application.Services.Products
         public async Task GetAll_WhenProductsExist_ReturnsAllProducts()
         {
             // Arrange
-            var products = _fixture.CreateMany<Product>().ToList();
-            var productsViewModel = _fixture.CreateMany<ProductViewModel>().ToList();
+            var products = new List<Product>
+            {
+                new Product { Id = 1, Name = "Smartphone", ProductTypeId = 1 },
+                new Product { Id = 2, Name = "Laptop", ProductTypeId = 1 }
+            };
+
+            var productsViewModel = new List<ProductViewModel>
+            {
+                new ProductViewModel { Id = 1, Name = "Smartphone", ProductTypeId = 1 },
+                new ProductViewModel { Id = 2, Name = "Laptop", ProductTypeId = 1 }
+            };
 
             _productRepositoryMock.Setup(x => x.GetAll())
                 .ReturnsAsync(products);
@@ -71,8 +80,20 @@ namespace clean_architecture_dotnet.Tests.Application.Services.Products
         {
             // Arrange
             var productId = 1;
-            var product = _fixture.Create<Product>();
-            var productViewModel = _fixture.Create<ProductViewModel>();
+
+            var product = new Product
+            {
+                Id = productId,
+                Name = "Smartphone",
+                ProductTypeId = 1
+            };
+
+            var productViewModel = new ProductViewModel
+            {
+                Id = productId,
+                Name = "Smartphone",
+                ProductTypeId = 1
+            };
 
             _productRepositoryMock.Setup(x => x.GetById(productId))
                 .ReturnsAsync(product);
@@ -85,8 +106,12 @@ namespace clean_architecture_dotnet.Tests.Application.Services.Products
 
             // Assert
             Assert.True(result.Success);
-            Assert.Equal(productViewModel, result.Data);
+            Assert.NotNull(result.Data);
+            Assert.Equal(productViewModel.Id, result.Data.Id);
+            Assert.Equal(productViewModel.Name, result.Data.Name);
+            Assert.Equal(productViewModel.ProductTypeId, result.Data.ProductTypeId);
         }
+
 
         [Fact]
         public async Task GetById_WhenProductDoesNotExist_ReturnsFail()
