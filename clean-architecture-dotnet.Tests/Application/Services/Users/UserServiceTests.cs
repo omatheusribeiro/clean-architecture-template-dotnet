@@ -36,8 +36,23 @@ namespace clean_architecture_dotnet.Tests.Application.Services.Users
         public async Task GetAll_WhenUsersExist_ReturnsAllUsers()
         {
             // Arrange
-            var users = _fixture.CreateMany<User>().ToList();
-            var usersViewModel = _fixture.CreateMany<UserViewModel>().ToList();
+            var users = new List<User>
+            {
+                new User {  
+                    Id = 1,
+                    FirstName = "John",
+                    LastName = "Doe",
+                    Document = "12345678900" }
+            };
+
+            var usersViewModel = new List<UserViewModel>
+            {
+                new UserViewModel {
+                    Id = 1,
+                    FirstName = "John",
+                    LastName = "Doe",
+                    Document = "12345678900" }
+            };
 
             _userRepositoryMock.Setup(x => x.GetAll())
                 .ReturnsAsync(users);
@@ -49,17 +64,24 @@ namespace clean_architecture_dotnet.Tests.Application.Services.Users
             var result = await _userService.GetAll();
 
             // Assert
+            Assert.NotNull(result);
             Assert.True(result.Success);
+            Assert.NotNull(result.Data);
+            Assert.Equal(usersViewModel.Count, result.Data.Count());
             Assert.Equal(usersViewModel, result.Data);
+
+            _userRepositoryMock.Verify(x => x.GetAll(), Times.Once);
+            _mapperMock.Verify(x => x.Map<IEnumerable<UserViewModel>>(users), Times.Once);
         }
+
 
         [Fact]
         public async Task GetById_WhenUserExists_ReturnsUser()
         {
             // Arrange
             var userId = 1;
-            var user = _fixture.Create<User>();
-            var userViewModel = _fixture.Create<UserViewModel>();
+            var user = new User { Id = userId, FirstName = "John", LastName = "Doe", Document = "12345678900" };
+            var userViewModel = new UserViewModel { Id = userId, FirstName = "John", LastName = "Doe", Document = "12345678900" };
 
             _userRepositoryMock.Setup(x => x.GetById(userId))
                 .ReturnsAsync(user);
@@ -71,9 +93,16 @@ namespace clean_architecture_dotnet.Tests.Application.Services.Users
             var result = await _userService.GetById(userId);
 
             // Assert
+            Assert.NotNull(result);
             Assert.True(result.Success);
-            Assert.Equal(userViewModel, result.Data);
+            Assert.NotNull(result.Data);
+            Assert.Equal(userViewModel.Id, result.Data.Id);
+            Assert.Equal(userViewModel.FirstName, result.Data.FirstName);
+
+            _userRepositoryMock.Verify(x => x.GetById(userId), Times.Once);
+            _mapperMock.Verify(x => x.Map<UserViewModel>(user), Times.Once);
         }
+
 
         [Fact]
         public async Task Put_WithValidUser_ReturnsSuccess()
