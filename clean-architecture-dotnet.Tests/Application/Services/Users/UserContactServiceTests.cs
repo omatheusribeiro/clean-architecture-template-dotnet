@@ -127,7 +127,6 @@ namespace clean_architecture_dotnet.Tests.Application.Services.Users
             Assert.False(result.Success);
             Assert.Equal($"There was an error editing the user contact: {exceptionMessage}", result.Message);
 
-            // Verifica que os métodos foram chamados corretamente antes da falha
             _userContactRepositoryMock.Verify(x => x.GetById(contactViewModel.Id), Times.Once);
             _userContactRepositoryMock.Verify(x => x.Put(contact), Times.Once);
             _mapperMock.Verify(x => x.Map<UserContact>(contactViewModel), Times.Once);
@@ -237,10 +236,8 @@ namespace clean_architecture_dotnet.Tests.Application.Services.Users
             Assert.NotNull(result);
             Assert.True(result.Success);
 
-            // Verifica a ordem de chamadas
             Assert.Equal(new[] { "GetById", "Put" }, sequence);
 
-            // Confirma que os métodos corretos foram chamados
             _userContactRepositoryMock.Verify(x => x.GetById(contactViewModel.Id), Times.Once);
             _userContactRepositoryMock.Verify(x => x.Put(contact), Times.Once);
         }
