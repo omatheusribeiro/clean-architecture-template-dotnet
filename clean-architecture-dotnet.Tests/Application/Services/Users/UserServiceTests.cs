@@ -161,45 +161,86 @@ namespace clean_architecture_dotnet.Tests.Application.Services.Users
         public async Task Post_WithValidUser_ReturnsSuccess()
         {
             // Arrange
-            var userViewModel = _fixture.Create<UserViewModel>();
-            var user = _fixture.Create<User>();
-            var address = _fixture.Create<UserAddress>();
-            var contact = _fixture.Create<UserContact>();
+            var userViewModel = new UserViewModel
+            {
+                Id = 1,
+                FirstName = "John",
+                LastName = "Doe",
+                Document = "12345678900",
+                Address = new UserAddressViewModel
+                {
+                    Id = 1,
+                    Street = "Rua das Flores",
+                    Number = 123,
+                    Complement = "",
+                    Neighborhood = "Test",
+                    City = "São Paulo",
+                    State = "SP",
+                    Country = "Brazil",
+                    ZipCode = "01000-000"
+                },
+                Contact = new UserContactViewModel
+                {
+                    Id = 1,
+                    Email = "user@email.com",
+                    PhoneNumber = "(11) 99999-9999"
+                }
+            };
 
-            _mapperMock.Setup(x => x.Map<User>(userViewModel))
-                .Returns(user);
+            var user = new User { Id = 1, FirstName = "John", LastName = "Doe", Document = "12345678900" };
+            var address = new UserAddress
+            {
+                Id = 1,
+                Street = "Rua das Flores",
+                Number = 123,
+                Complement = "",
+                Neighborhood = "Test",
+                City = "São Paulo",
+                State = "SP",
+                Country = "Brazil",
+                ZipCode = "01000-000",
+                UserId = 1
+            };
+            var contact = new UserContact
+            {
+                Id = 1,
+                Email = "user@email.com",
+                PhoneNumber = "(11) 99999-9999",
+                UserId = 1
+            };
 
-            _mapperMock.Setup(x => x.Map<UserAddress>(userViewModel.Address))
-                .Returns(address);
+            _mapperMock.Setup(x => x.Map<User>(userViewModel)).Returns(user);
+            _mapperMock.Setup(x => x.Map<UserAddress>(userViewModel.Address)).Returns(address);
+            _mapperMock.Setup(x => x.Map<UserContact>(userViewModel.Contact)).Returns(contact);
 
-            _mapperMock.Setup(x => x.Map<UserContact>(userViewModel.Contact))
-                .Returns(contact);
+            _userRepositoryMock.Setup(x => x.Post(user)).ReturnsAsync(user);
+            _userAddressRepositoryMock.Setup(x => x.Post(address)).ReturnsAsync(address);
+            _userContactRepositoryMock.Setup(x => x.Post(contact)).ReturnsAsync(contact);
 
-            _userRepositoryMock.Setup(x => x.Post(user))
-                .ReturnsAsync(user);
-
-            _userAddressRepositoryMock.Setup(x => x.Post(address))
-                .ReturnsAsync(address);
-
-            _userContactRepositoryMock.Setup(x => x.Post(contact))
-                .ReturnsAsync(contact);
-
-            _mapperMock.Setup(x => x.Map<UserViewModel>(user))
-                .Returns(userViewModel);
-
-            _mapperMock.Setup(x => x.Map<UserAddressViewModel>(address))
-                .Returns(userViewModel.Address);
-
-            _mapperMock.Setup(x => x.Map<UserContactViewModel>(contact))
-                .Returns(userViewModel.Contact);
+            _mapperMock.Setup(x => x.Map<UserViewModel>(user)).Returns(userViewModel);
+            _mapperMock.Setup(x => x.Map<UserAddressViewModel>(address)).Returns(userViewModel.Address);
+            _mapperMock.Setup(x => x.Map<UserContactViewModel>(contact)).Returns(userViewModel.Contact);
 
             // Act
             var result = await _userService.Post(userViewModel);
 
             // Assert
+            Assert.NotNull(result);
             Assert.True(result.Success);
-            Assert.Equal(userViewModel, result.Data);
+            Assert.NotNull(result.Data);
+            Assert.Equal(userViewModel.Id, result.Data.Id);
+            Assert.Equal(userViewModel.FirstName, result.Data.FirstName);
+            Assert.Equal(userViewModel.Address.Id, result.Data.Address.Id);
+            Assert.Equal(userViewModel.Contact.Id, result.Data.Contact.Id);
+
+            _userRepositoryMock.Verify(x => x.Post(user), Times.Once);
+            _userAddressRepositoryMock.Verify(x => x.Post(address), Times.Once);
+            _userContactRepositoryMock.Verify(x => x.Post(contact), Times.Once);
+            _mapperMock.Verify(x => x.Map<User>(userViewModel), Times.Once);
+            _mapperMock.Verify(x => x.Map<UserAddress>(userViewModel.Address), Times.Once);
+            _mapperMock.Verify(x => x.Map<UserContact>(userViewModel.Contact), Times.Once);
         }
+
 
         [Fact]
         public async Task Delete_WithValidUser_ReturnsSuccess()
