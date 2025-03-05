@@ -28,8 +28,20 @@ namespace clean_architecture_dotnet.Tests.Application.Services.Users
         public async Task Put_WithValidContact_ReturnsSuccess()
         {
             // Arrange
-            var contactViewModel = _fixture.Create<UserContactViewModel>();
-            var contact = _fixture.Create<UserContact>();
+            var contactViewModel = new UserContactViewModel
+            {
+                Id = 1,
+                Email = "user@email.com",
+                PhoneNumber = "(11) 99999-9999"
+            };
+
+            var contact = new UserContact
+            {
+                Id = 1,
+                Email = "user@email.com",
+                PhoneNumber = "(11) 99999-9999",
+                UserId = 1
+            };
 
             _userContactRepositoryMock.Setup(x => x.GetById(contactViewModel.Id))
                 .ReturnsAsync(contact);
@@ -47,11 +59,17 @@ namespace clean_architecture_dotnet.Tests.Application.Services.Users
             var result = await _userContactService.Put(contactViewModel);
 
             // Assert
+            Assert.NotNull(result);
             Assert.True(result.Success);
             Assert.Equal(contactViewModel, result.Data);
+
+            // Verifica se os métodos foram chamados corretamente
             _userContactRepositoryMock.Verify(x => x.GetById(contactViewModel.Id), Times.Once);
             _userContactRepositoryMock.Verify(x => x.Put(contact), Times.Once);
+            _mapperMock.Verify(x => x.Map<UserContact>(contactViewModel), Times.Once);
+            _mapperMock.Verify(x => x.Map<UserContactViewModel>(contact), Times.Once);
         }
+
 
         [Fact]
         public async Task Put_WithNonExistentContact_ReturnsFail()
@@ -75,8 +93,21 @@ namespace clean_architecture_dotnet.Tests.Application.Services.Users
         public async Task Put_WhenExceptionOccurs_ReturnsFail()
         {
             // Arrange
-            var contactViewModel = _fixture.Create<UserContactViewModel>();
-            var contact = _fixture.Create<UserContact>();
+            var contactViewModel = new UserContactViewModel
+            {
+                Id = 1,
+                Email = "user@email.com",
+                PhoneNumber = "(11) 99999-9999"
+            };
+
+            var contact = new UserContact
+            {
+                Id = 1,
+                Email = "user@email.com",
+                PhoneNumber = "(11) 99999-9999",
+                UserId = 1
+            };
+
             var exceptionMessage = "Database error";
 
             _userContactRepositoryMock.Setup(x => x.GetById(contactViewModel.Id))
@@ -92,9 +123,16 @@ namespace clean_architecture_dotnet.Tests.Application.Services.Users
             var result = await _userContactService.Put(contactViewModel);
 
             // Assert
+            Assert.NotNull(result);
             Assert.False(result.Success);
             Assert.Equal($"There was an error editing the user contact: {exceptionMessage}", result.Message);
+
+            // Verifica que os métodos foram chamados corretamente antes da falha
+            _userContactRepositoryMock.Verify(x => x.GetById(contactViewModel.Id), Times.Once);
+            _userContactRepositoryMock.Verify(x => x.Put(contact), Times.Once);
+            _mapperMock.Verify(x => x.Map<UserContact>(contactViewModel), Times.Once);
         }
+
 
         [Fact]
         public async Task Put_WithNullContact_ReturnsFail()
@@ -115,8 +153,20 @@ namespace clean_architecture_dotnet.Tests.Application.Services.Users
         public async Task Put_VerifyMappingCalls()
         {
             // Arrange
-            var contactViewModel = _fixture.Create<UserContactViewModel>();
-            var contact = _fixture.Create<UserContact>();
+            var contactViewModel = new UserContactViewModel
+            {
+                Id = 1,
+                Email = "user@email.com",
+                PhoneNumber = "(11) 99999-9999"
+            };
+
+            var contact = new UserContact
+            {
+                Id = 1,
+                Email = "user@email.com",
+                PhoneNumber = "(11) 99999-9999",
+                UserId = 1
+            };
 
             _userContactRepositoryMock.Setup(x => x.GetById(contactViewModel.Id))
                 .ReturnsAsync(contact);
@@ -131,19 +181,42 @@ namespace clean_architecture_dotnet.Tests.Application.Services.Users
                 .Returns(contactViewModel);
 
             // Act
-            await _userContactService.Put(contactViewModel);
+            var result = await _userContactService.Put(contactViewModel);
 
             // Assert
+            Assert.NotNull(result);
+            Assert.True(result.Success);
+            Assert.NotNull(result.Data);
+            Assert.Equal(contactViewModel.Id, result.Data.Id);
+            Assert.Equal(contactViewModel.Email, result.Data.Email);
+            Assert.Equal(contactViewModel.PhoneNumber, result.Data.PhoneNumber);
+
+            _userContactRepositoryMock.Verify(x => x.GetById(contactViewModel.Id), Times.Once);
+            _userContactRepositoryMock.Verify(x => x.Put(contact), Times.Once);
             _mapperMock.Verify(x => x.Map<UserContact>(contactViewModel), Times.Once);
             _mapperMock.Verify(x => x.Map<UserContactViewModel>(contact), Times.Once);
         }
+
 
         [Fact]
         public async Task Put_VerifyRepositorySequence()
         {
             // Arrange
-            var contactViewModel = _fixture.Create<UserContactViewModel>();
-            var contact = _fixture.Create<UserContact>();
+            var contactViewModel = new UserContactViewModel
+            {
+                Id = 1,
+                Email = "user@email.com",
+                PhoneNumber = "(11) 99999-9999"
+            };
+
+            var contact = new UserContact
+            {
+                Id = 1,
+                Email = "user@email.com",
+                PhoneNumber = "(11) 99999-9999",
+                UserId = 1
+            };
+
             var sequence = new List<string>();
 
             _userContactRepositoryMock.Setup(x => x.GetById(contactViewModel.Id))
@@ -158,10 +231,19 @@ namespace clean_architecture_dotnet.Tests.Application.Services.Users
                 .ReturnsAsync(contact);
 
             // Act
-            await _userContactService.Put(contactViewModel);
+            var result = await _userContactService.Put(contactViewModel);
 
             // Assert
+            Assert.NotNull(result);
+            Assert.True(result.Success);
+
+            // Verifica a ordem de chamadas
             Assert.Equal(new[] { "GetById", "Put" }, sequence);
+
+            // Confirma que os métodos corretos foram chamados
+            _userContactRepositoryMock.Verify(x => x.GetById(contactViewModel.Id), Times.Once);
+            _userContactRepositoryMock.Verify(x => x.Put(contact), Times.Once);
         }
+
     }
 } 
