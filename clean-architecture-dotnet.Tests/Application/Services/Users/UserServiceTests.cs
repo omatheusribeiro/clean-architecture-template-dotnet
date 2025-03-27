@@ -5,7 +5,7 @@ using clean_architecture_dotnet.Application.ViewModels.Users;
 using clean_architecture_dotnet.Domain.Entities.Users;
 using clean_architecture_dotnet.Infrastructure.Repositories.Users.Interfaces;
 using Moq;
-using Xunit;
+using Xunit; 
 
 namespace clean_architecture_dotnet.Tests.Application.Services.Users
 {
@@ -121,7 +121,7 @@ namespace clean_architecture_dotnet.Tests.Application.Services.Users
                     Number = 123,
                     Complement = "",
                     Neighborhood = "Test",
-                    City = "São Paulo",
+                    City = "SÃ£o Paulo",
                     State = "SP",
                     Country = "Brazil",
                     ZipCode = "01000-000"
@@ -142,7 +142,7 @@ namespace clean_architecture_dotnet.Tests.Application.Services.Users
                 Number = 123,
                 Complement = "",
                 Neighborhood = "Test",
-                City = "São Paulo",
+                City = "SÃ£o Paulo",
                 State = "SP",
                 Country = "Brazil",
                 ZipCode = "01000-000",
@@ -207,7 +207,7 @@ namespace clean_architecture_dotnet.Tests.Application.Services.Users
                     Number = 123,
                     Complement = "",
                     Neighborhood = "Test",
-                    City = "São Paulo",
+                    City = "SÃ£o Paulo",
                     State = "SP",
                     Country = "Brazil",
                     ZipCode = "01000-000"
@@ -228,7 +228,7 @@ namespace clean_architecture_dotnet.Tests.Application.Services.Users
                 Number = 123,
                 Complement = "",
                 Neighborhood = "Test",
-                City = "São Paulo",
+                City = "SÃ£o Paulo",
                 State = "SP",
                 Country = "Brazil",
                 ZipCode = "01000-000",
@@ -291,7 +291,7 @@ namespace clean_architecture_dotnet.Tests.Application.Services.Users
                     Number = 123,
                     Complement = "",
                     Neighborhood = "Test",
-                    City = "São Paulo",
+                    City = "SÃ£o Paulo",
                     State = "SP",
                     Country = "Brazil",
                     ZipCode = "01000-000"
@@ -315,7 +315,7 @@ namespace clean_architecture_dotnet.Tests.Application.Services.Users
                 Number = 123,
                 Complement = "",
                 Neighborhood = "Test",
-                City = "São Paulo",
+                City = "SÃ£o Paulo",
                 State = "SP",
                 Country = "Brazil",
                 ZipCode = "01000-000",
