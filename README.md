@@ -91,7 +91,7 @@ Make sure you have the following installed:
 ### 🔧 Installation
 ```bash
 # Clone the repository
-git clone https://github.com/your-repo/clean-architecture-dotnet.git
+git clone https://github.com/omatheusribeiro/clean-architecture-template-dotnet.git
 cd clean-architecture-template-dotnet
 ```
 
