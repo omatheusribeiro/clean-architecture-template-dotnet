@@ -103,7 +103,7 @@ Before running the application, configure the **database connection string** in:
 Example:
 ```json
 "ConnectionStrings": {
-  "DefaultConnection": "Data Source=localhost;Initial Catalog=clean-architecture-dotnet;Integrated Security=True;TrustServerCertificate=True"
+  "DefaultConnection": "Data Source=localhost\\SQLEXPRESS;Initial Catalog=clean-architecture-dotnet;Integrated Security=True;TrustServerCertificate=True"
 }
 ```
 
