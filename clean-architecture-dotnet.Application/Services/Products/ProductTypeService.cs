@@ -19,6 +19,47 @@ namespace clean_architecture_dotnet.Application.Services.Products
             _mapper = mapper;
         }
 
+        public async Task<Result<IEnumerable<ProductTypeViewModel>>> GetAll()
+        {
+            try
+            {
+                var products = await _productTypeRepository.GetAll();
+
+                if (products is null)
+                    return Result<IEnumerable<ProductTypeViewModel>>.Fail("Unable to identify product types in the database.", (int)HttpStatus.BadRequest);
+
+                var mapProducts = _mapper.Map<IEnumerable<ProductTypeViewModel>>(products);
+
+                return Result<IEnumerable<ProductTypeViewModel>>.Ok(mapProducts);
+
+            }
+            catch (Exception ex)
+            {
+                return Result<IEnumerable<ProductTypeViewModel>>.Fail("There was an error listing product types: " + ex.Message);
+            }
+
+        }
+
+        public async Task<Result<ProductTypeViewModel>> GetById(int id)
+        {
+            try
+            {
+                var product = await _productTypeRepository.GetById(id);
+
+                if (product is null)
+                    return Result<ProductTypeViewModel>.Fail("product type not found.", (int)HttpStatus.BadRequest);
+
+                var mapProduct = _mapper.Map<ProductTypeViewModel>(product);
+
+                return Result<ProductTypeViewModel>.Ok(mapProduct);
+            }
+            catch (Exception ex)
+            {
+                return Result<ProductTypeViewModel>.Fail("There was an error when searching for the product type: " + ex.Message);
+            }
+
+        }
+
         public async Task<Result<ProductTypeViewModel>> Put(ProductTypeViewModel productType)
         {
             try
