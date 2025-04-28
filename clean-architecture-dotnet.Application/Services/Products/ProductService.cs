@@ -111,14 +111,16 @@ namespace clean_architecture_dotnet.Application.Services.Products
             }
         }
 
-        public async Task<Result<ProductViewModel>> Delete(ProductViewModel product)
+        public async Task<Result<ProductViewModel>> Delete(int productId)
         {
             try
             {
-                var productType = await _productTypeRepository.GetById(product.ProductTypeId);
+                var product = await _productRepository.GetById(productId);
 
-                if (productType is null)
-                    return Result<ProductViewModel>.Fail("product type not found.", (int)HttpStatus.BadRequest);
+                if (product is null)
+                    return Result<ProductViewModel>.Fail("product not found.", (int)HttpStatus.BadRequest);
+
+                var productType = await _productTypeRepository.GetById(product.ProductTypeId);
 
                 var mapProduct = _mapper.Map<Product>(product);
 
@@ -126,7 +128,7 @@ namespace clean_architecture_dotnet.Application.Services.Products
 
                 var mapProductModel = _mapper.Map<ProductViewModel>(result);
 
-                return Result<ProductViewModel>.Ok(mapProductModel);
+                return Result<ProductViewModel>.Ok(null);
             }
             catch (Exception ex)
             {

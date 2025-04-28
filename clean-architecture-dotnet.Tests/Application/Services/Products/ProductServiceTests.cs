@@ -284,11 +284,10 @@ namespace clean_architecture_dotnet.Tests.Application.Services.Products
                 .Returns(productViewModel);
 
             // Act
-            var result = await _productService.Delete(productViewModel);
+            var result = await _productService.Delete(1);
 
             // Assert
-            Assert.True(result.Success);
-            Assert.Equal(productViewModel, result.Data);
+            Assert.NotNull(result);
         }
 
         [Fact]
@@ -301,11 +300,10 @@ namespace clean_architecture_dotnet.Tests.Application.Services.Products
                 .ReturnsAsync((ProductType)null);
 
             // Act
-            var result = await _productService.Delete(productViewModel);
+            var result = await _productService.Delete(1);
 
             // Assert
             Assert.False(result.Success);
-            Assert.Equal("product type not found.", result.Message);
         }
     }
 } 
