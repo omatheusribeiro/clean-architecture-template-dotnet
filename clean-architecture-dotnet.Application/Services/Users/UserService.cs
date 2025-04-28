@@ -109,7 +109,7 @@ namespace clean_architecture_dotnet.Application.Services.Users
         {
             try
             {
-                if(user is null)
+                if (user is null)
                     return Result<UserViewModel>.Fail("There is missing information to perform user creation.", (int)HttpStatus.BadRequest);
 
                 if (user.Address is null)
@@ -141,10 +141,12 @@ namespace clean_architecture_dotnet.Application.Services.Users
 
         }
 
-        public async Task<Result<UserViewModel>> Delete(UserViewModel user)
+        public async Task<Result<UserViewModel>> Delete(int userId)
         {
             try
             {
+                var user = await _userRepository.GetById(userId);
+
                 if (user is null)
                     return Result<UserViewModel>.Fail("There is missing information to delete the user.", (int)HttpStatus.BadRequest);
 
@@ -154,32 +156,19 @@ namespace clean_architecture_dotnet.Application.Services.Users
                 if (user.Contact is null)
                     return Result<UserViewModel>.Fail("There is missing information to delete the user contact.", (int)HttpStatus.BadRequest);
 
-                var userEntity = await _userRepository.GetById(user.Id);
-                var addressEntity = await _userAddressRepository.GetById(user.Address.Id);
-                var contactEntity = await _userContactRepository.GetById(user.Contact.Id);
-
-                if (userEntity is null)
-                    return Result<UserViewModel>.Fail("User not found.", (int)HttpStatus.BadRequest);
-
-                if (addressEntity is null)
-                    return Result<UserViewModel>.Fail("Address not found.", (int)HttpStatus.BadRequest);
-
-                if (contactEntity is null)
-                    return Result<UserViewModel>.Fail("Contact not found.", (int)HttpStatus.BadRequest);
-
                 var mapUser = _mapper.Map<User>(user);
 
                 var resultUser = await _userRepository.Delete(mapUser);
 
                 var mapUserModel = _mapper.Map<UserViewModel>(resultUser);
 
-                return Result<UserViewModel>.Ok(mapUserModel);
+                return Result<UserViewModel>.Ok(null);
             }
             catch (Exception ex)
             {
                 return Result<UserViewModel>.Fail("There was an error deleting the user: " + ex.Message);
             }
-
         }
+
     }
 }
