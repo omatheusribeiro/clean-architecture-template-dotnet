@@ -9,7 +9,7 @@ using clean_architecture_dotnet.Infrastructure.EntitiesConfiguration.Users;
 
 namespace clean_architecture_dotnet.Infrastructure.Context
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : DbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
