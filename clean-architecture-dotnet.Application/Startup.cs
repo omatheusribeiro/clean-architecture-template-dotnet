@@ -23,8 +23,6 @@ namespace clean_architecture_dotnet.Application
             #region Users Services
 
             services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IUserAddressService, UserAddresService>();
-            services.AddScoped<IUserContactService, UserContactService>();
 
             #endregion
 
