@@ -9,6 +9,6 @@ namespace clean_architecture_dotnet.Application.Services.Sales.Interfaces
         Task<Result<SaleViewModel>> GetById(int id);
         Task<Result<SaleViewModel>> Put(SaleViewModel sale);
         Task<Result<SaleViewModel>> Post(SaleViewModel sale);
-        Task<Result<SaleViewModel>> Delete(SaleViewModel sale);
+        Task<Result<SaleViewModel>> Delete(int saleId);
     }
 }

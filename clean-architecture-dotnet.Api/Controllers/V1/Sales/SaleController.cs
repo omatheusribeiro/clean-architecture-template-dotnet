@@ -67,11 +67,11 @@ namespace clean_architecture_dotnet.Api.Controllers.V1.Sales
             return Ok(response);
         }
 
-        [HttpDelete("DeleteSale")]
+        [HttpDelete("DeleteSale/{saleId:int}")]
         [Authorize]
-        public async Task<ActionResult<SaleViewModel>> Delete([FromBody] SaleViewModel sale)
+        public async Task<ActionResult<SaleViewModel>> Delete([FromRoute] int saleId)
         {
-            var response = await _saleService.Delete(sale);
+            var response = await _saleService.Delete(saleId);
 
             if (response.StatusCode == (int)HttpStatus.BadRequest)
                 return BadRequest(response);
